@@ -1,6 +1,7 @@
 package ru.gb.market.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.dto.ProductDto;
 import ru.gb.market.model.Product;
@@ -19,13 +20,20 @@ public class ProductController {
         return new ProductDto(productService.findById(id).get());
     }
 
+    //    @GetMapping("/products")
+//    public List<ProductDto> findAll() {
+//        List<ProductDto> productDtoList = new ArrayList<>();
+//        for (Product e : productService.findAll()) {
+//            productDtoList.add(new ProductDto(e));
+//        }
+//        return productDtoList;
+//    }
     @GetMapping("/products")
-    public List<ProductDto> findAll() {
-        List<ProductDto> productDtoList = new ArrayList<>();
-        for (Product e : productService.findAll()) {
-            productDtoList.add(new ProductDto(e));
+    public Page<ProductDto> findAll(@RequestParam (name = "p", defaultValue = "1") int pageIndex) {
+        if (pageIndex<1){
+            pageIndex = 1;
         }
-        return productDtoList;
+        return productService.findAll(pageIndex-1,10).map(ProductDto::new);
     }
 
     @PostMapping("/products")
@@ -34,8 +42,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/delete/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ProductDto deleteById(@PathVariable Long id) {
+        ProductDto item = new ProductDto(productService.findById(id).get());
         productService.deleteById(id);
+        return item;
     }
 
 

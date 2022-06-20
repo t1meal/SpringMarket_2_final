@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.gb.market.model.Product;
 import ru.gb.market.repositories.ProductRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,23 +14,26 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public Optional<Product> findById (Long id){
-        return productRepository.findById(id);
-    }
-    public Page<Product> findAll(int pageIndex, int pageSize){
+    public Page<Product> findAll(int pageIndex, int pageSize) {
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
+    }
 
-    public Product save (Product product){
+    public Product save(Product product) {
         return productRepository.save(product);
     }
-    public void deleteById (Long id){
-        productRepository.deleteById(id);
+
+    public Product update(Product product) {
+        Product baseProduct = productRepository.findByTitle(product.getTitle()).get();
+        baseProduct.setPrice(product.getPrice());
+        productRepository.save(baseProduct);
+        return baseProduct;
     }
 
-
-    public List<Product> findByPriceBetween (int minPrice, int maxPrice){
-        return productRepository.findProductByPriceBetween( minPrice, maxPrice);
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }

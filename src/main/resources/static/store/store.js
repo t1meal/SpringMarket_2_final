@@ -1,11 +1,10 @@
-angular.module('market_front', []).controller('appController', function ($scope, $http) {
+angular.module('market_front').controller('storeController', function ($scope, $http, $location) {
 
     const contextPath = 'http://localhost:8080/market/api/v1/';
 
     let currentPage = 1;
 
     $scope.loadProducts = function (pageIndex) {
-        currentPage = pageIndex;
         $http({
             url: contextPath + 'products',
             method: 'GET',
@@ -16,29 +15,15 @@ angular.module('market_front', []).controller('appController', function ($scope,
             .then(function (response) {
                 $scope.productsPage = response.data;
                 $scope.paginationArray = $scope.generatePageIndexes (1, $scope.productsPage.totalPages);
+                currentPage = pageIndex;
             });
     }
 
     $scope.deleteProduct = function (product) {
         $http.delete(contextPath + 'products/' + product.id)
-            .then(function (response) {
-                console.log(response)
-                $scope.loadProducts()
+            .then(function () {
+                $scope.loadProducts(currentPage);
             });
-    }
-
-    $scope.createNewProduct = function () {
-        $http.post(contextPath + 'products/', $scope.new_product)
-            .then(
-                function successCallback(response) {
-                    console.log(response);
-                    $scope.loadProducts(currentPage);
-                    $scope.new_product = null;
-                },
-                function failCallback(response) {
-                    console.log(response);
-                    alert("New product cannot be created!");
-                });
     }
 
     $scope.generatePageIndexes = function (startPage, endPage){
@@ -47,6 +32,10 @@ angular.module('market_front', []).controller('appController', function ($scope,
             arr.push(i);
         }
         return arr;
+    }
+
+    $scope.navToEditProductPage = function (productId){
+        $location.path('edit_product/' + productId);
     }
 
     $scope.nextPage = function (){

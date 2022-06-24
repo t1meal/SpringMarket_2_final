@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+
+    <script src="index.js"></script>
+</head>
+<body ng-app="market_front">
+<div class="container" ng-controller="appController">
+    <h2>Main Page</h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Delete</td>
+            <td>Update</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in productsPage.content">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p)">Delete item</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="prepareProductForUpdate(p.id)">Choose item</button>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" ng-click="prevPage()">
+                    <span>Previous</span>
+                </a>
+            </li>
+
+            <li class="page-item" ng-repeat="pageIndex in paginationArray">
+                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" ng-click="nextPage()" >
+                    <span>Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <p></p>
+
+    <h3>Add product to database</h3>
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control"
+                   placeholder="please enter there title of new product..."
+                   ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control"
+                   placeholder="please enter there price of new product..."
+                   ng-model="new_product.price">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+    <p></p>
+
+    <h3>Update product in database</h3>
+    <form novalidate ng-submit="updateProduct()">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control"
+                   placeholder="title of updated product..." ng-model="updated_product.title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control"
+                   placeholder="price of updated product..." ng-model="updated_product.price">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <p></p>
+</div>
+</body>
+</html>

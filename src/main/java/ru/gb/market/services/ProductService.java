@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.gb.market.dto.ProductDto;
+import ru.gb.market.exceptions.ResourceNotFoundException;
 import ru.gb.market.model.Product;
 import ru.gb.market.repositories.ProductRepository;
 
@@ -22,15 +25,16 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Product save(Product product) {
-        return productRepository.save(product);
+    public void save(Product product) {
+        productRepository.save(product);
     }
 
-    public Product update(Product product) {
-        Product baseProduct = productRepository.findByTitle(product.getTitle()).get();
-        baseProduct.setPrice(product.getPrice());
-        productRepository.save(baseProduct);
-        return baseProduct;
+    @Transactional
+    public void updateProduct(ProductDto productDto) {
+        Product product = findById(productDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + productDto.getId() + " cannot be found!"));
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
     }
 
     public void deleteById(Long id) {

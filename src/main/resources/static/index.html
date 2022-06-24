@@ -10,73 +10,38 @@
             crossorigin="anonymous"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <script src="app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+
+<!--    <script src="index.js"></script>-->
 </head>
 <body ng-app="market_front">
-<div class="container" ng-controller="appController">
-    <h2>Main Page</h2>
+<div class="container" ng-controller="indexController">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Title</td>
-            <td>Price</td>
-            <td>Actions</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="p in productsPage.content">
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
-            <td>
-                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p)">Delete</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" ng-click="prevPage()">
-                    <span>Previous</span>
-                </a>
-            </li>
-
-            <li class="page-item" ng-repeat="pageIndex in paginationArray">
-                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
-            </li>
-
-            <li class="page-item">
-                <a class="page-link" ng-click="nextPage()" >
-                    <span>Next</span>
-                </a>
-            </li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#!/">StartPage</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup1">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="#!/store">Store</a>
+                    <a class="nav-link" href="#!/create_product">Create product</a>
+                </div>
+            </div>
+        </div>
     </nav>
-
     <p></p>
-    <h3>Add product to database</h3>
 
-    <form novalidate ng-submit="createNewProduct()">
-        <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" class="form-control"
-                   placeholder="please enter there title of new product..."
-                   ng-model="new_product.title">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Price</label>
-            <input type="text" class="form-control"
-                   placeholder="please enter there price of new product..."
-                   ng-model="new_product.price">
-        </div>
 
-        <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-    <p></p>
+    <ng-view></ng-view>
+
+    <script src="index.js"></script>
+    <script src="store/store.js"></script>
+    <script src="welcome/welcome.js"></script>
+    <script src="edit_product/edit_product.js"></script>
+    <script src="create_product/create_product.js"></script>
+
 
 </div>
 </body>

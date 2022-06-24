@@ -1,0 +1,14 @@
+<div>
+    <h3>Add product to database</h3>
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" placeholder="please enter there title of new product..." ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" placeholder="please enter there price of new product..." ng-model="new_product.price">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>

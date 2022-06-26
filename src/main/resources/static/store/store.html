@@ -9,6 +9,7 @@
             <td>Price</td>
             <td>Delete</td>
             <td>Update</td>
+            <td>Cart</td>
         </tr>
         </thead>
         <tbody>
@@ -16,13 +17,9 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-            <td>
-                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p)">Delete item</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)">Choose item</button>
-            </td>
-
+            <td>                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p)">Delete item</button>            </td>
+            <td>                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)">Choose</button>            </td>
+            <td>                <button type="button" class="btn btn-primary" ng-click="addProductToCart(p)">Add</button>            </td>
         </tr>
         </tbody>
     </table>

@@ -1,14 +1,21 @@
 package ru.gb.market.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
+
 public class DataValidationException extends RuntimeException {
     private List<String> messages;
+
+        public DataValidationException(List<String> messages) {
+        this.messages = messages;
+    }
+
+    public List<String> getMessages() {
+        return messages;
+    }
+    public void setMessages(List<String> messages) {
+        this.messages = messages;
+    }
 }

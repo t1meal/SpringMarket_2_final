@@ -14,7 +14,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
         })
             .then(function (response) {
                 $scope.productsPage = response.data;
-                $scope.paginationArray = $scope.generatePageIndexes (1, $scope.productsPage.totalPages);
+                $scope.paginationArray = $scope.generatePageIndexes(1, $scope.productsPage.totalPages);
                 currentPage = pageIndex;
             });
     }
@@ -26,7 +26,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
             });
     }
 
-    $scope.generatePageIndexes = function (startPage, endPage){
+    $scope.generatePageIndexes = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i <= endPage; i++) {
             arr.push(i);
@@ -34,23 +34,35 @@ angular.module('market_front').controller('storeController', function ($scope, $
         return arr;
     }
 
-    $scope.navToEditProductPage = function (productId){
+    $scope.navToEditProductPage = function (productId) {
         $location.path('edit_product/' + productId);
     }
 
-    $scope.nextPage = function (){
+    $scope.nextPage = function () {
         currentPage++;
-        if (currentPage > $scope.productsPage.totalPages){
+        if (currentPage > $scope.productsPage.totalPages) {
             currentPage = $scope.productsPage.totalPages;
         }
         $scope.loadProducts(currentPage);
     }
-    $scope.prevPage = function (){
+    $scope.prevPage = function () {
         currentPage--;
-        if (currentPage < 1 ){
+        if (currentPage < 1) {
             currentPage = 1;
         }
         $scope.loadProducts(currentPage);
+    }
+
+    $scope.addProductToCart = function (product) {
+        $http.post(contextPath + 'products/cart', product)
+            .then(
+                function successCallback() {
+                    alert("Product successfully added to cart!");
+                    $location.path ('/cart');
+                },
+                function failCallback(response) {
+                    alert(response.data.messages);
+                });
     }
 
     $scope.loadProducts();

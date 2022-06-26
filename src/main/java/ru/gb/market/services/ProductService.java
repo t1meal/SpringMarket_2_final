@@ -8,14 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.dto.ProductDto;
 import ru.gb.market.exceptions.ResourceNotFoundException;
 import ru.gb.market.model.Product;
+import ru.gb.market.repositories.CartProductRepository;
 import ru.gb.market.repositories.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final CartProductRepository cartProductRepository;
 
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
@@ -39,5 +42,15 @@ public class ProductService {
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+///////////////////////////////////////////////////////////////////////////////////////////
+    public List<Product> findAllInCart() {
+        return cartProductRepository.findAllInCart();
+    }
+    public void addProductInCart(Product product){
+        cartProductRepository.addProduct(product);
+    }
+    public void deleteProductFromCart(Long id){
+        cartProductRepository.deleteProductInCart(id);
     }
 }

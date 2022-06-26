@@ -14,6 +14,8 @@ import ru.gb.market.exceptions.ResourceNotFoundException;
 import ru.gb.market.model.Product;
 import ru.gb.market.services.ProductService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -43,7 +45,7 @@ public class ProductController {
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             throw new DataValidationException(bindingResult
                     .getAllErrors()
                     .stream()
@@ -64,4 +66,27 @@ public class ProductController {
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+    @GetMapping("/products/cart")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> findAllInCart() {
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for (Product e:productService.findAllInCart()) {
+            productDtoList.add(new ProductDto(e));
+        }
+        return productDtoList;
+//        return productService.findAllInCart().stream().map(ProductDto::new).collect(Collectors.toList());
+    }
+    @PostMapping("/products/cart")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addProductInCart(@RequestBody ProductDto productDto) {
+        productService.addProductInCart(new Product(productDto.getId(), productDto.getTitle(),productDto.getPrice()));
+    }
+    @DeleteMapping("/products/cart/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProductFromCart(@PathVariable Long id) {
+        productService.deleteProductFromCart(id);
+    }
+
 }

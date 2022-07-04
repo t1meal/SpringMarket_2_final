@@ -7,9 +7,9 @@
             <td>ID</td>
             <td>Title</td>
             <td>Price</td>
-            <td>Delete</td>
-            <td>Update</td>
-            <td>Cart</td>
+            <td ng-show="isUserLoggedIn()">Delete</td>
+            <td ng-show="isUserLoggedIn()">Update</td>
+            <td ng-show="isUserLoggedIn()">Cart</td>
         </tr>
         </thead>
         <tbody>
@@ -17,9 +17,15 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-            <td>                <button type="button" class="btn btn-primary" ng-click="deleteProduct(p)">Delete item</button>            </td>
-            <td>                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)">Choose</button>            </td>
-            <td>                <button type="button" class="btn btn-primary" ng-click="addProductToCart(p)">Add</button>            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="deleteProduct(p)">Delete item</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="navToEditProductPage(p.id)">Choose</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="addProductToCart(p)">Add</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -37,7 +43,7 @@
             </li>
 
             <li class="page-item">
-                <a class="page-link" ng-click="nextPage()" >
+                <a class="page-link" ng-click="nextPage()">
                     <span>Next</span>
                 </a>
             </li>

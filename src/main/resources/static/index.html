@@ -11,6 +11,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 
 <!--    <script src="index.js"></script>-->
 </head>
@@ -23,11 +24,33 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup1">
                 <div class="navbar-nav">
                     <a class="nav-link" href="#!/store">Store</a>
-                    <a class="nav-link" href="#!/create_product">Create product</a>
-                    <a class="nav-link" href="#!/cart">Cart</a>
+                    <a class="nav-link" ng-show="isUserLoggedIn()" href="#!/create_product">Create product</a>
+                    <a class="nav-link" ng-show="isUserLoggedIn()" href="#!/cart">Cart</a>
+
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <form class="align-middle" ng-submit="tryToAuth()">
+                            <div class="input-group input-group-sm" style="padding: 4px;">
+                                <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
+                                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                                        style="margin-left: 10px;" type="submit">Войти
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+
+                    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                    </li>
+
                 </div>
             </div>
         </div>

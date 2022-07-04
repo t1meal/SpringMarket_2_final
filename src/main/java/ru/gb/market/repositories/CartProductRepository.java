@@ -31,16 +31,9 @@ public class CartProductRepository {
     }
     public void deleteProductInCart(Long id) {
         if (id != null) {
-            Iterator<Product> productIterator = listProductsInCart.iterator();
-            while (productIterator.hasNext()) {
-                Product nextProduct = productIterator.next();
-                if (id == nextProduct.getId()) {
-                    productIterator.remove();
-                }
-            }
+            listProductsInCart.removeIf(nextProduct -> id.equals(nextProduct.getId()));
         }
     }
-
     public List<Product> getListProductsInCart() {
         return listProductsInCart;
     }

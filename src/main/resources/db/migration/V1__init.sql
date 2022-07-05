@@ -1,3 +1,10 @@
+create table products
+(
+    id    bigserial primary key,
+    title varchar(255),
+    price int
+);
+
 create table users
 (
     id         bigserial primary key,
@@ -43,8 +50,8 @@ create table roles_privileges
 );
 
 insert into users (username, password, email)
-values ('user', '$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i', 'user@gmail.com'),
-       ('admin', '$2a$12$ZK.z1My6veIr4tFiz7yavuJ.vy2/Cfr4lV3qp2n8x3oVN8Briie3G', 'admin@gmail.com');
+values ('user', '$2a$12$AzQ.SQRayi4zzUZD0FziheAIQqtqzIeL2GyRi6wxw59X5XB5W.0ci', 'user@gmail.com'),
+       ('admin', '$2a$12$6TnMBKtQeEuAwgV9c55PA.D80dLJtuVDSafVVCgTi7s16VgG2s4aK', 'admin@gmail.com');
 
 insert into roles (name)
 values ('ROLE_USER'),
@@ -79,12 +86,7 @@ values (1, 1),
        (4, 5),
        (4, 6);
 
-create table products
-(
-    id    bigserial primary key,
-    title varchar(255),
-    price int
-);
+
 insert into products (title, price)
 values ('bread', 40),      //1
        ('bread1', 100),    //2

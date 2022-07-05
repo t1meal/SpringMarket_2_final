@@ -58,7 +58,6 @@ angular.module('market_front').controller('storeController', function ($scope, $
             .then(
                 function successCallback() {
                     alert("Product successfully added to cart!");
-                    $location.path ('/cart');
                 },
                 function failCallback(response) {
                     alert(response.data.messages);

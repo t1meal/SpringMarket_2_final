@@ -6,8 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.market.configs.SecurityConfig;
 import ru.gb.market.model.Privilege;
 import ru.gb.market.model.Role;
 import ru.gb.market.model.User;
@@ -25,11 +27,21 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
+    private BCryptPasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    @Transactional
+    public void saveUser (User user){
+        String encryptedPassword = getPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
+    }
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

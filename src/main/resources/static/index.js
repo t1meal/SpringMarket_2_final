@@ -26,6 +26,10 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartProductController'
             })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
+            })
             .otherwise({
                 redirectTo: '/'
             })
@@ -39,7 +43,7 @@
 
 })();
 
-angular.module('market_front').controller('indexController', function ($rootScope, $scope, $http, $localStorage) {
+angular.module('market_front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8080/market/api/v1/';
 
     $scope.tryToAuth = function () {
@@ -70,6 +74,7 @@ angular.module('market_front').controller('indexController', function ($rootScop
         if($scope.user.password){
             $scope.user.password = null;
         }
+        $location.path('/');
     }
 
     $rootScope.isUserLoggedIn = function () {

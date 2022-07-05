@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 
-<!--    <script src="index.js"></script>-->
+    <!--    <script src="index.js"></script>-->
 </head>
 <body ng-app="market_front">
 <div class="container" ng-controller="indexController">
@@ -21,7 +21,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#!/">StartPage</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -37,7 +38,8 @@
                                 <input id="navLoginField" class="form-control" ng-model="user.username" type="text"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
-                                <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                <input id="navPasswordField" class="form-control" ng-model="user.password"
+                                       type="password"
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                                 <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
@@ -50,6 +52,8 @@
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                     </li>
+
+                    <a class="nav-link" ng-show="!isUserLoggedIn()" href="#!/registration">Registration</a>
 
                 </div>
             </div>
@@ -66,7 +70,7 @@
     <script src="edit_product/edit_product.js"></script>
     <script src="create_product/create_product.js"></script>
     <script src="cart/cart.js"></script>
-
+    <script src="registration/registration.js"></script>
 
 </div>
 </body>

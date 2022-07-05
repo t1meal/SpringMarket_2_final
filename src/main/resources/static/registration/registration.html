@@ -1,0 +1,22 @@
+<div>
+    <h3>Form by new user</h3>
+    <form novalidate ng-submit="tryToRegistration()">
+
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" placeholder="please enter you name..." ng-model="new_user.username">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="text" class="form-control" placeholder="please enter you password..." ng-model="new_user.password">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" placeholder="please enter you email..." ng-model="new_user.email">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

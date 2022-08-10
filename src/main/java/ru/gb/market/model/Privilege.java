@@ -1,6 +1,8 @@
 package ru.gb.market.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,7 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "privileges")
 public class Privilege {
     @Id

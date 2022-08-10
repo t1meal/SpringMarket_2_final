@@ -2,6 +2,8 @@ package ru.gb.market.exceptions;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.validation.BindingResult;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -24,4 +26,6 @@ public class MarketError {
     public MarketError(String... messages) {
         this(Arrays.asList(messages));
     }
+
+
 }

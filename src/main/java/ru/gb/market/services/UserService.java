@@ -1,19 +1,19 @@
 package ru.gb.market.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gb.market.configs.SecurityConfig;
 import ru.gb.market.model.Privilege;
 import ru.gb.market.model.Role;
 import ru.gb.market.model.User;
 import ru.gb.market.repositories.UserRepository;
+import ru.gb.market.utils.BCPassEncoder;
 
 
 import java.util.ArrayList;
@@ -24,21 +24,22 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final BCPassEncoder passEncoder;
 
-    private BCryptPasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @PreAuthorize("USER")
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+
     }
 
     @Transactional
     public void saveUser (User user){
-        String encryptedPassword = getPasswordEncoder().encode(user.getPassword());
+        String encryptedPassword = passEncoder.getPasswordEncoder().encode(user.getPassword());
         user.setPassword(encryptedPassword);
         userRepository.save(user);
     }

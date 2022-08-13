@@ -4,21 +4,32 @@ server:
     context-path: /market
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:mydatabase;MODE=PostgreSQL
-    username: sa
-    password:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/geekmarket
+    username: postgres
+    password: postgres
   jpa:
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: false
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+
 jwt:
   secret: fasdfo3451kb12l3k4h12k5h2lkj5h12lk3b5l12kg61l2k451lk15l43k5h1
   lifetime: 3600000
 
+#server.port=8080
+#server.servlet.context-path=/market
+#
+#spring.datasource.driver-class-name=org.postgresql.Driver
+#spring.datasource.username=postgres
+#spring.datasource.password=postgres
+#spring.datasource.url=jdbc:postgresql://localhost:5433/geekmarket
+#
+#
+#spring.liquibase.change-log=classpath*:db/changelog/changelog-master.xml
+#
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true

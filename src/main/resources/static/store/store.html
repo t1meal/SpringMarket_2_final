@@ -1,6 +1,10 @@
 <div>
     <h2>Catalog of Products</h2>
 
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-info" type="button" ng-show="isUserLoggedIn()" ng-click="navToCartPage()"> ->>Cart<<- </button>
+    </div>
+
     <table class="table">
         <thead>
         <tr>

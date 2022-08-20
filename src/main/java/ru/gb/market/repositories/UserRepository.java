@@ -1,7 +1,7 @@
 package ru.gb.market.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.gb.market.model.User;
+import ru.gb.market.entities.User;
 
 import java.util.Optional;
 

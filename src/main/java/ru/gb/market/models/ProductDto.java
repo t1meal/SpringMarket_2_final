@@ -1,9 +1,9 @@
-package ru.gb.market.dto;
+package ru.gb.market.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import ru.gb.market.model.Product;
+import ru.gb.market.entities.Product;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

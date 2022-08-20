@@ -9,9 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gb.market.model.Privilege;
-import ru.gb.market.model.Role;
-import ru.gb.market.model.User;
+import ru.gb.market.entities.Privilege;
+import ru.gb.market.entities.Role;
+import ru.gb.market.entities.User;
+import ru.gb.market.models.Cart;
 import ru.gb.market.repositories.UserRepository;
 import ru.gb.market.utils.BCPassEncoder;
 
@@ -24,19 +25,16 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCPassEncoder passEncoder;
 
 
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
-    @PreAuthorize("USER")
+//    @PreAuthorize("USER")
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
-
     }
-
     @Transactional
     public void saveUser (User user){
         String encryptedPassword = passEncoder.getPasswordEncoder().encode(user.getPassword());
@@ -51,7 +49,6 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails
                 .User(dataUser.getUsername(), dataUser.getPassword(), getAuthorities(dataUser.getRoles()));
     }
-
     //    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
 //        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 //    }

@@ -4,6 +4,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
 
     let currentPage = 1;
 
+
     $scope.loadProducts = function (pageIndex) {
         $http({
             url: contextPath + 'products',
@@ -37,6 +38,9 @@ angular.module('market_front').controller('storeController', function ($scope, $
     $scope.navToEditProductPage = function (productId) {
         $location.path('edit_product/' + productId);
     }
+    $scope.navToCartPage = function (productId) {
+        $location.path('cart/');
+    }
 
     $scope.nextPage = function () {
         currentPage++;
@@ -57,7 +61,6 @@ angular.module('market_front').controller('storeController', function ($scope, $
         $http.post(contextPath + 'products/cart', product)
             .then(
                 function successCallback() {
-                    alert("Product successfully added to cart!");
                 },
                 function failCallback(response) {
                     alert(response.data.messages);

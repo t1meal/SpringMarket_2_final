@@ -78,11 +78,7 @@ angular.module('market_front').controller('indexController', function ($rootScop
     }
 
     $rootScope.isUserLoggedIn = function () {
-        if($localStorage.webMarketUser){
-            return true;
-        } else {
-            return false;
-        }
+        return !!$localStorage.webMarketUser;
     }
 
 });

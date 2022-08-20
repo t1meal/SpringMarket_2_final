@@ -1,4 +1,4 @@
-package ru.gb.market.dto;
+package ru.gb.market.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ public class UserDto {
     private String username;
 
     @NotNull(message = "Password is empty!")
-    @Length(min = 6, max = 50, message = "Incorrect password length!")
+    @Length(min = 3, max = 50, message = "Incorrect password length!")
     private String password;
 
     @Length(min = 10, max = 30, message = "Incorrect email!")
@@ -24,6 +24,4 @@ public class UserDto {
         this.password = password;
         this.email = email;
     }
-
-
 }

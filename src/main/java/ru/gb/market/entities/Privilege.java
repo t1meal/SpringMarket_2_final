@@ -1,6 +1,5 @@
-package ru.gb.market.model;
+package ru.gb.market.entities;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,8 +12,8 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
-@Table(name = "roles")
-public class Role {
+@Table(name = "privileges")
+public class Privilege {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,12 +22,8 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "roles_privileges",
-            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
-    )
-    private Collection<Privilege> privileges;
+    @ManyToMany(mappedBy = "privileges")
+    Collection<Role> roles;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -37,5 +32,4 @@ public class Role {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 }

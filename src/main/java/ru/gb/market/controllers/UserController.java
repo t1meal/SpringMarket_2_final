@@ -6,9 +6,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.gb.market.dto.UserDto;
+import ru.gb.market.models.UserDto;
 import ru.gb.market.exceptions.DataValidationException;
-import ru.gb.market.model.User;
+import ru.gb.market.entities.User;
 import ru.gb.market.services.UserService;
 
 import java.util.stream.Collectors;

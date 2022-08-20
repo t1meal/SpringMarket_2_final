@@ -1,25 +1,54 @@
 <div>
     <div>
-        <h2>Cart of Products</h2>
+        <h2>Cart</h2>
 
         <table class="table">
             <thead>
             <tr>
-                <td>ID</td>
+                <td>Id</td>
                 <td>Title</td>
+                <td>Count</td>
+                <td>Inc/Dec</td>
                 <td>Price</td>
+                <td>Sum</td>
                 <td>Delete</td>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="p in products">
-                <td>{{p.id}}</td>
-                <td>{{p.title}}</td>
-                <td>{{p.price}}</td>
-                <td>    <button type="button" class="btn btn-primary" ng-click="deleteProductFromCart(p)">Delete item</button>     </td>
+            <tr ng-repeat="item in cartItems">
+                <td>{{item.id}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.count}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="incCountOfProduct(item)"> +</button>
+                    <button type="button" class="btn btn-primary" ng-click="decCountOfProduct(item)"> -</button>
+                </td>
+                <td>{{item.price}}</td>
+                <td>{{item.sum}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="deleteProductFromCart(item)">Delete item
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" ng-click="loadCartProducts()">Update</button>
+
+        <form novalidate class='d-flex justify-content-end' ng-submit="sendOrder()">
+            <div class="col-auto">
+                <label class="visually-hidden">Text</label>
+                <input type="text" readonly class="form-control-plaintext" value="Final sum of you order:">
+            </div>
+            <div class="col-auto">
+                <label class="visually-hidden">SumOfOrder</label>
+                <input class="form-control" type="number"` ng-model="sumOfOrder" disabled>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Confirm</button>
+            </div>
+        </form>
+        <div>
+            <button type="button" class="btn btn-primary" ng-click="removeAllProductsInCart()">Remove All</button>
+        </div>
+
     </div>
 </div>

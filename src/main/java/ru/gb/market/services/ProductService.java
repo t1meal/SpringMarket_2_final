@@ -5,35 +5,45 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gb.market.models.ProductDto;
+import ru.gb.market.mappers.ProductMapper;
+import ru.gb.market.dto.ProductDto;
 import ru.gb.market.exceptions.ResourceNotFoundException;
 import ru.gb.market.entities.Product;
-import ru.gb.market.repositories.CartRepository;
-import ru.gb.market.repositories.ProductRepository;
 
-import java.util.Optional;
+import ru.gb.market.repositories.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    public Page<Product> findAll(int pageIndex, int pageSize) {
-        return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
+    public Page<ProductDto> findAll(int pageIndex, int pageSize) {
+        if (pageIndex < 1) {
+            pageIndex = 1;
+        }
+        return productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize)).map(productMapper::mapToDto);
     }
 
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    // подредачить. чтобы из базы возвращался Product и далее с ним работаем. Отдельным метод для возврата в контроллер.
+    public ProductDto findById(Long id) {
+        return productMapper.mapToDto(productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found")));
     }
 
-    public void save(Product product) {
-        productRepository.save(product);
+    public Product findByIdUtil(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
     }
 
+    public void save(ProductDto productDto) {
+        productRepository.save(productMapper.mapToProduct(productDto));
+    }
+
+    // завязать с логикой двух методов
     @Transactional
     public void updateProduct(ProductDto productDto) {
-        Product product = findById(productDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + productDto.getId() + " cannot be found!"));
+        Product product = findByIdUtil(productDto.getId());
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
     }

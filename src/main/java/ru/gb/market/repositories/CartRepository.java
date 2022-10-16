@@ -2,19 +2,14 @@ package ru.gb.market.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.gb.market.entities.Product;
-import ru.gb.market.models.Cart;
-import ru.gb.market.models.CartItem;
+import ru.gb.market.models.ShoppingCart;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Long> {
+public interface CartRepository extends JpaRepository<ShoppingCart, Long> {
 
-    Optional<Cart> findCartByCartOwner(String userName);
+    Optional<ShoppingCart> findCartByCartOwner(String userName);
 
 //    List<CartItem> cartItems;
 //

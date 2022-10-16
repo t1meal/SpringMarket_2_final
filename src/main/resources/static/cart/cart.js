@@ -16,9 +16,10 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.deleteProductFromCart = function (item) {
-        $http.delete(contextPath + 'products/cart/' + item.title)
+        $http.delete(contextPath + 'products/cart/' + item.id)
             .then(function successCallback() {
                     $scope.loadCartProducts();
+                    $scope.loadSumOrder();
                 },
                 function failCallback(response) {
                     alert(response.data.messages);

@@ -1,7 +1,6 @@
 package ru.gb.market.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.entities.Privilege;
 import ru.gb.market.entities.Role;
 import ru.gb.market.entities.User;
-import ru.gb.market.models.Cart;
 import ru.gb.market.repositories.UserRepository;
 import ru.gb.market.utils.BCPassEncoder;
 

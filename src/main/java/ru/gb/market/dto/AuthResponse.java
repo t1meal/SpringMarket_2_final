@@ -1,4 +1,4 @@
-package ru.gb.market.models;
+package ru.gb.market.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
 package ru.gb.market.services;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.market.entities.Product;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Getter
 public class CartService {
     private final CartRepository cartRepository;
     private final CartServiceUtils cartServiceUtils;
@@ -50,7 +52,7 @@ public class CartService {
     }
 
     private boolean addProductIfExist(Long productId, ShoppingCart cart) {
-        if (cart.getItems() == null){
+        if (cart.getItems() == null) {
             cart.setItems(new ArrayList<>());
             return false;
         }

@@ -5,15 +5,15 @@
         <button class="btn btn-info" type="button" ng-show="isUserLoggedIn()" ng-click="navToCartPage()"> ->>Cart<<- </button>
     </div>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <td>ID</td>
             <td>Title</td>
             <td>Price</td>
-            <td ng-show="isUserLoggedIn()">Delete</td>
-            <td ng-show="isUserLoggedIn()">Update</td>
-            <td ng-show="isUserLoggedIn()">Cart</td>
+            <td ng-show="isUserLoggedIn()">M1</td>
+            <td ng-show="isUserLoggedIn()">M2</td>
+            <td ng-show="isUserLoggedIn()">M3</td>
         </tr>
         </thead>
         <tbody>
@@ -22,13 +22,13 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="deleteProduct(p)">Delete item</button>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="deleteProduct(p)">Delete</button>
             </td>
             <td>
-                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="navToEditProductPage(p.id)">Choose</button>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="navToEditProductPage(p.id)">Update</button>
             </td>
             <td>
-                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="addProductToCart(p)">Add</button>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="addProductToCart(p)">Add_To_Cart</button>
             </td>
         </tr>
         </tbody>

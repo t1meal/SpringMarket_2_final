@@ -10,48 +10,48 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/products/cart")
+    @GetMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
     public List<CartItem> findAllInCart(Principal principal) {
         return cartService.findAllInCart(principal.getName());
     }
-    @PostMapping("/products/cart")
+    @PostMapping("/cart")
     @ResponseStatus(HttpStatus.CREATED)
     public void addProductInCart(Principal principal, @RequestBody ProductDto productDto) {
         cartService.addProductIfExist(principal.getName() ,productDto);
     }
 
-    @DeleteMapping("/products/cart/{id}")
+    @DeleteMapping("/cart/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProductFromCart(@PathVariable Long id) {
         cartService.deleteItem(id);
     }
 
-    @PutMapping("/products/cart/inc/{id}")
+    @PutMapping("/cart/inc/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void incCountOfItem(@PathVariable Long id) {
         cartService.incDecCountOfItem(id, 1);
     }
 
-    @PutMapping("/products/cart/dec/{id}")
+    @PutMapping("/cart/dec/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void decCountOfItem(@PathVariable Long id) {
         cartService.incDecCountOfItem( id, -1);
     }
 
-    @GetMapping("/products/cart/sum")
+    @GetMapping("/cart/sum")
     @ResponseStatus(HttpStatus.OK)
     public Integer pullSumOfOrder() {
         return cartService.getTotalPrice();
     }
 
-    @DeleteMapping("/products/cart")
+    @DeleteMapping("/cart")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAllItems (){
         cartService.deleteAllItems();

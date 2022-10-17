@@ -1,12 +1,15 @@
 package ru.gb.market.models;
 
-import lombok.Data;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.gb.market.entities.Product;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class CartItem implements Serializable {
 
@@ -27,5 +30,10 @@ public class CartItem implements Serializable {
     public void changeQuantity(int delta) {
         this.count += delta;
         this.sum = this.count * this.price;
+    }
+
+    @Override
+    public String toString() {
+        return "{id=" + id + ", title=" + title +", count=" + count +"},";
     }
 }

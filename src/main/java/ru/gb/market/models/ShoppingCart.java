@@ -7,20 +7,22 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-//@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @RedisHash ("cart")
 
-public class Cart implements Serializable {
+public class ShoppingCart implements Serializable {
 
     @Id
     private Long id;
+    private List<CartItem> items;
+    private int totalPrice;
 
-    private String cartOwner;
-
-//    @Transient
-    private List<CartItem> items = new ArrayList<>();
+    public ShoppingCart(Long userID) {
+        this.id = userID;
+        this.totalPrice = 0;
+    }
 }

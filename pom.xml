@@ -37,11 +37,11 @@
 			<version>1.5.2.Final</version>
 		</dependency>
 
-
 		<!--		<dependency>-->
 <!--			<groupId>org.flywaydb</groupId>-->
 <!--			<artifactId>flyway-core</artifactId>-->
 <!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
@@ -49,6 +49,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>42.5.0</version>
 			<scope>runtime</scope>
 		</dependency>
 

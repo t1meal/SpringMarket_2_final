@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtTokenUtil {
+public class  JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
 

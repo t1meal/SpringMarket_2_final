@@ -52,3 +52,15 @@ create table roles_privileges
     foreign key (privilege_id) references privileges (id)
 );
 
+--changeset t1meal: add_orders
+
+create table orders
+(
+    id    bigserial,
+    user_id bigint not null,
+    total_price int not null,
+    order_items varchar(255),
+    primary key (id),
+    foreign key (user_id) references users (id)
+);
+

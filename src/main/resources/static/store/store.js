@@ -61,6 +61,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
         $http.post(contextPath + 'products/cart', product)
             .then(
                 function successCallback() {
+                    alert('ОК');
                 },
                 function failCallback(response) {
                     alert(response.data.messages);

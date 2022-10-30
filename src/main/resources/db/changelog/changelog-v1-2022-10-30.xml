@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="2022-10-30" author="t1meal">
+        <createTable tableName="orders" remarks="Заказы">
+            <column name="id" type="bigint" remarks="Идентификатор">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="total_price" type="int" remarks="Стоимость">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint" remarks="Идентификатор владельца заказа"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="orders"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_order"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

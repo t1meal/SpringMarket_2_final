@@ -15,9 +15,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/order")
-    @ResponseStatus(HttpStatus.OK)
-    public void saveOrder(Principal principal) {
-        orderService.saveOrder(principal.getName());
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createOrder(Principal principal) {
+        orderService.createOrder(principal.getName());
     }
 
 }

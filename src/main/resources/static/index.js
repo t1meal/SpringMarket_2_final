@@ -36,7 +36,7 @@
     }
 
     function run($rootScope, $http, $localStorage) {
-        if($localStorage.webMarketUser){
+        if ($localStorage.webMarketUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.webMarketUser.token;
         }
     }
@@ -66,12 +66,12 @@ angular.module('market_front').controller('indexController', function ($rootScop
         delete $localStorage.webMarketUser;
         $http.defaults.headers.common.Authorization = '';
     }
-    $scope.tryToLogout = function (){
+    $scope.tryToLogout = function () {
         $scope.clearUser();
-        if($scope.user.username){
+        if ($scope.user.username) {
             $scope.user.username = null;
         }
-        if($scope.user.password){
+        if ($scope.user.password) {
             $scope.user.password = null;
         }
         $location.path('/');
@@ -79,6 +79,22 @@ angular.module('market_front').controller('indexController', function ($rootScop
 
     $rootScope.isUserLoggedIn = function () {
         return !!$localStorage.webMarketUser;
+    }
+
+    if ($localStorage.webMarketUser) {
+        try {
+            let jwt = $localStorage.webMarketUser.token;
+            let payload = JSON.parse(atob(jwt.split('.')[1]));
+            let currentTime = parseInt(new Date().getTime() / 1000);
+            if (currentTime > payload.exp) {
+                console.log("Token is expired!!!");
+                delete $localStorage.webMarketUser;
+                $http.defaults.headers.common.Authorization = '';
+            }
+        } catch (e) {
+        }
+
+        $http.defaults.headers.common.Authorization = "Bearer " + $localStorage.webMarketUser.token;
     }
 
 });

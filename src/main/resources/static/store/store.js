@@ -38,7 +38,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
     $scope.navToEditProductPage = function (productId) {
         $location.path('edit_product/' + productId);
     }
-    $scope.navToCartPage = function (productId) {
+    $scope.navToCartPage = function () {
         $location.path('cart/');
     }
 
@@ -67,7 +67,13 @@ angular.module('market_front').controller('storeController', function ($scope, $
                     alert(response.data.messages);
                 });
     }
+    // $scope.checkEmptyCart = function () {
+    //     $http.get(contextPath + 'products/cart/empty')
+    //
+    // }
+
 
     $scope.loadProducts();
+    // $scope.checkEmptyCart();
 
 });

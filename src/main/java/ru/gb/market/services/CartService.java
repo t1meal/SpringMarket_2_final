@@ -37,18 +37,23 @@ public class CartService {
         return cart.getItems();
     }
 
+//    public void checkEmptyCart(String name) {
+//
+//    }
+
     private void putToCart(ShoppingCart cart, Product product) {
-        cart.getItems().add(new CartItem(product));
+        cart.getItems().add(new CartItem(product)); //TODO: добавить в корзину метод для добавления продуктов вместо ред листа
         recalculate(cart);
         cartRepository.save(cart);
     }
 
-    public void addProductIfExist(String userName, ProductDto productDto) {
+    public void addProduct(String userName, ProductDto productDto) {
+        Product product = productMapper.mapToProduct(productDto);
         ShoppingCart userCart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
-        if (addProductIfExist(productDto.getId(), userCart)) {
+        if (addProductIfExist(product.getId(), userCart)) {
             return;
         }
-        putToCart(userCart, productMapper.mapToProduct(productDto));
+        putToCart(userCart, product);
     }
 
     private boolean addProductIfExist(Long productId, ShoppingCart cart) {
@@ -57,7 +62,7 @@ public class CartService {
             return false;
         }
         for (CartItem item : cart.getItems()) {
-            if (item.getId().equals(productId)) {
+            if (item.getProductId().equals(productId)) {
                 item.changeQuantity(1);
                 recalculate(cart);
                 cartRepository.save(cart);
@@ -70,14 +75,14 @@ public class CartService {
     public void incDecCountOfItem(Long id, Integer marker) {
         ShoppingCart cart = cartServiceUtils.findCartById(UserID);
         CartItem item = cart.getItems().stream()
-                .filter(cartItem -> id.equals(cartItem.getId()))
+                .filter(cartItem -> id.equals(cartItem.getProductId()))
                 .findAny()
                 .get();
         item.changeQuantity(marker);
         recalculate(cart);
 
         if (item.getCount() < 1) {
-            cart.getItems().removeIf(cartItem -> item.getId().equals(cartItem.getId()));
+            cart.getItems().removeIf(cartItem -> item.getProductId().equals(cartItem.getProductId()));
             recalculate(cart);
         }
         cartRepository.save(cart);
@@ -85,7 +90,7 @@ public class CartService {
 
     public void deleteItem(Long id) {
         ShoppingCart cart = cartServiceUtils.findCartById(UserID);
-        cart.getItems().removeIf(cartItem -> cartItem.getId().equals(id));
+        cart.getItems().removeIf(cartItem -> cartItem.getProductId().equals(id));
         recalculate(cart);
         cartRepository.save(cart);
     }
@@ -108,5 +113,6 @@ public class CartService {
     public Integer getTotalPrice() {
         return totalPrice;
     }
+
 
 }

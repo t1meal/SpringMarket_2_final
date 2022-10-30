@@ -30,6 +30,10 @@ public class ProductService {
         return productMapper.mapToDto(productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found")));
     }
+    public Product findProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
+    }
 
     public Product findByIdUtil(Long id) {
         return productRepository.findById(id)

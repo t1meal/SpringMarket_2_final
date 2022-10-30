@@ -24,7 +24,7 @@ public class CartController {
     @PostMapping("/cart")
     @ResponseStatus(HttpStatus.CREATED)
     public void addProductInCart(Principal principal, @RequestBody ProductDto productDto) {
-        cartService.addProductIfExist(principal.getName() ,productDto);
+        cartService.addProduct(principal.getName() ,productDto);
     }
 
     @DeleteMapping("/cart/{id}")
@@ -56,5 +56,11 @@ public class CartController {
     public void deleteAllItems (){
         cartService.deleteAllItems();
     }
+
+//    @GetMapping("/cart/empty")
+//    @ResponseStatus(HttpStatus.OK)
+//    public void checkEmptyCart(Principal principal) {
+//         cartService.checkEmptyCart(principal.getName());
+//    }
 
 }

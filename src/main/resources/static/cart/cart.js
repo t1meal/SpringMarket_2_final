@@ -27,7 +27,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.incCountOfProduct = function (item) {
-        $http.put(contextPath + '/products/cart/inc/' + item.id)
+        $http.put(contextPath + '/products/cart/inc/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
                     $scope.loadSumOrder();
@@ -37,7 +37,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
                 });
     }
     $scope.decCountOfProduct = function (item) {
-        $http.put(contextPath + '/products/cart/dec/' + item.id)
+        $http.put(contextPath + '/products/cart/dec/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
                     $scope.loadSumOrder();

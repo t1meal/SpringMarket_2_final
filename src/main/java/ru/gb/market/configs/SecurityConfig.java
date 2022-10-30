@@ -29,6 +29,7 @@ private final JwtRequestFilter jwtRequestFilter;
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
+                .antMatchers("/order").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

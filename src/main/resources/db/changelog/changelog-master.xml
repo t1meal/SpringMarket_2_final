@@ -7,5 +7,6 @@
     
     <include file="ddl/mainDB.sql" relativeToChangelogFile="true"/>
     <include file="dml/insert_mainDB.sql" relativeToChangelogFile="true"/>
+<!--    <include file="./db/changelog/changelog-v1-2022-10-30.xml"/>-->
 
 </databaseChangeLog>

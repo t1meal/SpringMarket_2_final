@@ -3,7 +3,7 @@ package ru.gb.market.services;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.gb.market.entities.Product;
+import ru.gb.market.entities.ProductEntity;
 import ru.gb.market.mappers.ProductMapper;
 import ru.gb.market.models.ShoppingCart;
 import ru.gb.market.models.CartItem;
@@ -41,14 +41,14 @@ public class CartService {
 //
 //    }
 
-    private void putToCart(ShoppingCart cart, Product product) {
-        cart.getItems().add(new CartItem(product)); //TODO: добавить в корзину метод для добавления продуктов вместо ред листа
+    private void putToCart(ShoppingCart cart, ProductEntity product) {
+        cart.setNewItem(new CartItem(product)); //TODO: добавить в корзину метод для добавления продуктов вместо ред листа
         recalculate(cart);
         cartRepository.save(cart);
     }
 
     public void addProduct(String userName, ProductDto productDto) {
-        Product product = productMapper.mapToProduct(productDto);
+        ProductEntity product = productMapper.mapToProduct(productDto);
         ShoppingCart userCart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
         if (addProductIfExist(product.getId(), userCart)) {
             return;

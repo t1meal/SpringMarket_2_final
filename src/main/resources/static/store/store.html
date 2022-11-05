@@ -13,7 +13,7 @@
             <td>Price</td>
             <td ng-show="isUserLoggedIn()">M1</td>
             <td ng-show="isUserLoggedIn()">M2</td>
-            <td ng-show="isUserLoggedIn()">M3</td>
+            <td ng-show="isUserLoggedIn()">Cart</td>
         </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                 <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="navToEditProductPage(p.id)">Update</button>
             </td>
             <td>
-                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="addProductToCart(p)">Add_To_Cart</button>
+                <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="addProductToCart(p)">Add</button>
             </td>
         </tr>
         </tbody>

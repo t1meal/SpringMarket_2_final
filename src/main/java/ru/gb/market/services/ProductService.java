@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.mappers.ProductMapper;
 import ru.gb.market.dto.ProductDto;
 import ru.gb.market.exceptions.ResourceNotFoundException;
-import ru.gb.market.entities.Product;
+import ru.gb.market.entities.ProductEntity;
 
 import ru.gb.market.repositories.ProductRepository;
 
@@ -30,12 +30,12 @@ public class ProductService {
         return productMapper.mapToDto(productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found")));
     }
-    public Product findProductById(Long id) {
+    public ProductEntity findProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
     }
 
-    public Product findByIdUtil(Long id) {
+    public ProductEntity findByIdUtil(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
     }
@@ -47,7 +47,7 @@ public class ProductService {
     // завязать с логикой двух методов
     @Transactional
     public void updateProduct(ProductDto productDto) {
-        Product product = findByIdUtil(productDto.getId());
+        ProductEntity product = findByIdUtil(productDto.getId());
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
     }

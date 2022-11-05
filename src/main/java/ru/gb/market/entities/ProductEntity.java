@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,12 +23,12 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    public Product(String title, int price) {
+    public ProductEntity(String title, int price) {
         this.title = title;
         this.price = price;
     }
 
-    public Product(Long id, String title, int price) {
+    public ProductEntity(Long id, String title, int price) {
         this.id = id;
         this.title = title;
         this.price = price;

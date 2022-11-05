@@ -10,6 +10,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableCaching
 @EnableRedisRepositories
 @EnableAspectJAutoProxy
+
 public class SpringMarketApplication {
 
 	public static void main(String[] args) {

@@ -3,7 +3,7 @@ package ru.gb.market.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.gb.market.entities.Product;
+import ru.gb.market.entities.ProductEntity;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ public class CartItem implements Serializable {
     private int count;
     private int sum;
 
-    public CartItem(Product product) {
+    public CartItem(ProductEntity product) {
         this.productId = product.getId();
         this.title = product.getTitle();
         this.count = 1;

@@ -11,6 +11,7 @@
             <td>ID</td>
             <td>Title</td>
             <td>Price</td>
+            <td>Category</td>
             <td ng-show="isUserLoggedIn()">M1</td>
             <td ng-show="isUserLoggedIn()">M2</td>
             <td ng-show="isUserLoggedIn()">Cart</td>
@@ -21,6 +22,7 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+            <td>{{p.categoryTitle}}</td>
             <td>
                 <button type="button" class="btn btn-primary" ng-show="isUserLoggedIn()" ng-click="deleteProduct(p)">Delete</button>
             </td>

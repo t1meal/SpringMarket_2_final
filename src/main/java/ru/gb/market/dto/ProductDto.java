@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class ProductDto {
 
     private Long id;
+
     @NotNull(message = "Title is empty!")
     @Length(min = 3, max = 50, message = "Incorrect title length!")
     private String title;
@@ -20,4 +21,5 @@ public class ProductDto {
     @Min(value = 1, message = "Price is too small!")
     private int price;
 
+    private String categoryTitle;
 }

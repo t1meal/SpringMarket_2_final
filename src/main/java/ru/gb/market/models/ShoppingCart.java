@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collections;
+
 import java.util.List;
 
 @Getter
@@ -26,8 +26,11 @@ public class ShoppingCart implements Serializable {
         this.totalPrice = 0;
     }
 
-    public List<CartItem> getItems (){
-        return Collections.unmodifiableList(items); // TODO подредачить код под геттер
+//    public List<CartItem> getItems (){
+//        return Collections.unmodifiableList(items); // TODO подредачить код под геттер
+//    }
+    public void setNewItem (CartItem cartItem){
+        this.items.add(cartItem);
     }
 
 }

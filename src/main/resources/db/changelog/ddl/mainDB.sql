@@ -90,5 +90,19 @@ create table order_items
     updated_at        timestamp default current_timestamp
 
 );
+--changeset t1meal: add_categories_to_products
+
+create table categories
+(
+    id         bigserial primary key,
+    title      varchar(255) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+alter table products add column category_id bigint references categories (id);
+alter table products add column created_at timestamp default current_timestamp;
+alter table products add column updated_at timestamp default current_timestamp;
+
+
 
 

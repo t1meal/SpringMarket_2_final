@@ -3,12 +3,27 @@
     <form novalidate ng-submit="createNewProduct()">
         <div class="mb-3">
             <label class="form-label">Title</label>
-            <input type="text" class="form-control" placeholder="please enter there title of new product..." ng-model="new_product.title">
+            <input type="text" class="form-control" placeholder="please enter there title of new product..."
+                   ng-model="new_product.title">
         </div>
         <div class="mb-3">
             <label class="form-label">Price</label>
-            <input type="number" class="form-control" placeholder="please enter there price of new product..." ng-model="new_product.price">
+            <input type="number" class="form-control" placeholder="please enter there price of new product..."
+                   ng-model="new_product.price">
         </div>
+        <div>
+            <label class="form-label">Category</label>
+            <select class="form-select" aria-label="Default select example" ng-model="new_product.categoryTitle">
+<!--                <option selected>Please select category of product</option>-->
+                <option value="Food">Food</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+        <p></p>
+        <!--        <div class="mb-3">-->
+        <!--            <label class="form-label">Category</label>-->
+        <!--            <input type="text" class="form-control" placeholder="please enter there category of new product..." ng-model="new_product.categoryTitle">-->
+        <!--        </div>-->
         <button type="submit" class="btn btn-primary">Add</button>
     </form>
 </div>

@@ -10,7 +10,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @SpringBootApplication
 @EnableCaching
 @EnableRedisRepositories
-@EnableAspectJAutoProxy
 
 public class SpringMarketCartsApplication {
     public static void main(String[] args) {

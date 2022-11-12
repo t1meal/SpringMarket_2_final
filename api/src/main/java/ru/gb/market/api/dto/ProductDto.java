@@ -11,6 +11,7 @@ public class ProductDto {
 
     private String categoryTitle;
 
+
     public Long getId() {
         return id;
     }

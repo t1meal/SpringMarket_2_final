@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ru.gb.market.api.dto.CartDto;
+
+
 import java.util.Optional;
 
 @Component
@@ -11,11 +13,17 @@ import java.util.Optional;
 public class CartServiceIntegration {
     private final RestTemplate restTemplate;
 
-    public Optional<CartDto> getCartById (Long id){
-        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8090/market/api/v1/cart" + id, CartDto.class));
+    public Optional<CartDto> getCartByUserId (Long id){
+        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8090/market-carts/api/v1/cart/" + id, CartDto.class));
+
     }
+
     public void clearCart (Long id){
-         restTemplate.delete("http://localhost:8090/market/api/v1/cart" + id);
+        restTemplate.delete("http://localhost:8090/market-carts/api/v1/cart/" + id);
+    }
+
+    public void createCart (Long id){
+        restTemplate.put("http://localhost:8090/market-carts/api/v1/cart/create/" + id, Object.class);
     }
 
 }

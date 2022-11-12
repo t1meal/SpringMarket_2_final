@@ -15,6 +15,7 @@ import ru.gb.market.core.utils.BindingResultService;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 
 public class UserController {
     private final UserService userService;
@@ -23,7 +24,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUser(@RequestBody @Validated NewUserDto userDto, BindingResult bindingResult) {
         BindingResultService.checkError(bindingResult);
-        userService.saveUser(new UserEntity(userDto.getUsername(), userDto.getPassword(), userDto.getEmail()));
+        userService.createUser(userDto);
     }
 
     @GetMapping("/user")

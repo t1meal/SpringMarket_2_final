@@ -9,10 +9,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.market.api.dto.NewUserDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
 import ru.gb.market.core.entities.Privilege;
 import ru.gb.market.core.entities.Role;
 import ru.gb.market.core.entities.UserEntity;
+import ru.gb.market.core.integrations.CartServiceIntegration;
+import ru.gb.market.core.mappers.UserMapper;
 import ru.gb.market.core.repositories.UserRepository;
 import ru.gb.market.core.utils.BCPassEncoder;
 import ru.gb.market.core.utils.RoleGenerator;
@@ -33,6 +36,10 @@ public class UserService implements UserDetailsService {
 
     private final RoleGenerator roleGenerator;
 
+    private final UserMapper userMapper;
+
+    private final CartServiceIntegration cartServiceIntegration;
+
 
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
 //    @PreAuthorize("USER")
@@ -47,17 +54,19 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveUser(UserEntity user) {
+    public void createUser (NewUserDto user) {
         for (UserEntity items : userRepository.findAll()) {
             if (items.getUsername().equals(user.getUsername())) {
                 log.error("User with name " + user.getUsername() + " is already exist!!!");
                 throw new UsernameNotFoundException("User with name " + user.getUsername() + " is already exist!!!");
             }
         }
+        UserEntity newUser = userMapper.dtoToEntity(user);
         String encryptedPassword = passEncoder.getPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encryptedPassword);
-        user.setRoles(roleGenerator.addOneRole("ROLE_USER"));
-        userRepository.save(user);
+        newUser.setPassword(encryptedPassword);
+        newUser.setRoles(roleGenerator.addOneRole("ROLE_USER"));
+        userRepository.save(newUser);
+        cartServiceIntegration.createCart(newUser.getId());
     }
 
     @Override

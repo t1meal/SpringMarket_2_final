@@ -23,8 +23,9 @@ public class ProductService {
         if (pageIndex < 1) {
             pageIndex = 1;
         }
-        return productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize))
-                .map(product -> productConverter.entityToDto(product));
+        Page<ProductDto> page = productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize))
+                .map(productConverter::entityToDto);
+        return page;
     }
 
     public ProductDto findProductDtoById(Long id) {

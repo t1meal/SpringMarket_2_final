@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>api</module>
+        <module>front_end_service</module>
     </modules>
 
     <parent>

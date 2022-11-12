@@ -27,6 +27,11 @@ public class CartService {
     private Long UserID;
     private int totalPrice;
 
+    public void createCart(Long id){
+        Cart cart = new Cart(id);
+        cartRepository.save(cart);
+    }
+
     public CartDto getCurrentCart(Long userId) {
         Cart cart = cartServiceUtils.findCartById(userId);
         return cartConverter.entityToDto(cart);

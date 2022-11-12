@@ -14,6 +14,7 @@ import ru.gb.market.core.utils.BindingResultService;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 
 public class ProductController {
     private final ProductService productService;
@@ -22,6 +23,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ProductDto> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
         return productService.findAll(pageIndex, 10);
+
     }
 
     @GetMapping("/products/{id}")

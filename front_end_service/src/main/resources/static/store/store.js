@@ -1,6 +1,7 @@
-angular.module('market_front').controller('storeController', function ($scope, $http, $location) {
+angular.module('market_front').controller('storeController', function ($scope, $http, $location, $localStorage) {
 
     const contextPath = 'http://localhost:8080/market/api/v1/';
+    const contextPathCarts = 'http://localhost:8090/market-carts/api/v1';
 
     let currentPage = 1;
 
@@ -57,8 +58,8 @@ angular.module('market_front').controller('storeController', function ($scope, $
         $scope.loadProducts(currentPage);
     }
 
-    $scope.addProductToCart = function (product) {
-        $http.post(contextPath + 'products/cart', product)
+    $scope.addProductToCart = function (p) {
+        $http.post(contextPathCarts + '/cart', p, $localStorage.webMarketUser.username)
             .then(
                 function successCallback() {
                     alert('ОК');

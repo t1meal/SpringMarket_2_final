@@ -1,22 +1,23 @@
 angular.module('market_front').controller('cartProductController', function ($scope, $http) {
 
-    const contextPath = 'http://localhost:8090/market-carts/api/v1';
+    const contextPathCart = 'http://localhost:8090/market-carts/api/v1';
+    const contextPathCore = 'http://localhost:8080/market/api/v1';
 
     $scope.loadCartProducts = function () {
-        $http.get(contextPath + '/cart')
+        $http.get(contextPathCore + '/cart')
             .then(function (response) {
                 $scope.cartItems = response.data.cartItems;
             });
     }
     $scope.loadSumOrder = function () {
-        $http.get(contextPath + '/cart/sum')
+        $http.get(contextPathCart + '/cart/sum')
             .then(function (response) {
                 $scope.sumOfOrder = response.data;
             });
     }
 
     $scope.deleteProductFromCart = function (item) {
-        $http.delete(contextPath + '/cart/' + item.productId)
+        $http.delete(contextPathCart + '/cart/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
                     $scope.loadSumOrder();
@@ -27,7 +28,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.incCountOfProduct = function (item) {
-        $http.put(contextPath + '/cart/inc/' + item.productId)
+        $http.put(contextPathCart + '/cart/inc/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
                     $scope.loadSumOrder();
@@ -37,7 +38,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
                 });
     }
     $scope.decCountOfProduct = function (item) {
-        $http.put(contextPath + '/cart/dec/' + item.productId)
+        $http.put(contextPathCart + '/cart/dec/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
                     $scope.loadSumOrder();
@@ -48,7 +49,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.removeAllProductsInCart = function () {
-        $http.delete(contextPath + '/cart')
+        $http.delete(contextPathCart + '/cart')
             .then(function successCallback() {
                     alert("Корзина очищена");
                     $scope.loadCartProducts();
@@ -61,7 +62,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.sendOrder = function () {
-        $http.get(contextPath + '/order')
+        $http.get(contextPathCart + '/order')
             .then(function successCallback() {
                     alert("Заказ успешно размещен!");
                     $scope.removeAllProductsInCart();

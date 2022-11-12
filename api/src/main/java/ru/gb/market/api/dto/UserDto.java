@@ -1,5 +1,7 @@
 package ru.gb.market.api.dto;
 
+import java.util.List;
+
 public class UserDto {
 
     private Long id;
@@ -7,6 +9,16 @@ public class UserDto {
     private String username;
 
     private String email;
+
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;

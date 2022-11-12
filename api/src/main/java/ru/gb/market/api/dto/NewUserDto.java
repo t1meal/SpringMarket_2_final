@@ -10,6 +10,8 @@ public class NewUserDto {
 
     private String email;
 
+
+
     public Long getId() {
         return id;
     }

@@ -29,7 +29,7 @@ public class OrderService {
     public void createOrder(String userName) {
         UserEntity user = userService.findByUsername(userName)
                 .orElseThrow(() -> new ResourceNotFoundException("User name " + userName + "not found!"));
-        CartDto cartDto = cartServiceIntegration.getCartById(user.getId())
+        CartDto cartDto = cartServiceIntegration.getCartByUserId(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Cart for user id " + user.getId() + " is not found!"));
 
         List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems());

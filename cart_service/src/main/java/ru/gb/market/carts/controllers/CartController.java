@@ -6,31 +6,40 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.carts.services.CartService;
+
 import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @CrossOrigin("*")
+
 public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/cart")
+    @PutMapping ("/cart/create/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CartDto getCurrentCart(Long cartUserId) {
-        return cartService.getCurrentCart(cartUserId);
+    public void newCart (@PathVariable Long id){
+        cartService.createCart(id);
+    }
+
+    @GetMapping("/cart/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CartDto getCurrentCart(@PathVariable Long id) {
+        return cartService.getCurrentCart(id);
     }
 
     @PostMapping("/cart")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInCart(Principal principal, @RequestBody ProductDto productDto) {
-        cartService.addProduct(principal.getName() ,productDto);
+    public void addProductInCart(@RequestBody ProductDto productDto, String userName) {
+        cartService.addProduct(userName,productDto);
     }
 
-    @DeleteMapping("/cart/{id}")
+    @DeleteMapping("/cart/item/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProductFromCart(@PathVariable Long id) {
+    public void deleteItemFromCart(@PathVariable Long id) {
         cartService.deleteItem(id);
     }
 
@@ -56,12 +65,6 @@ public class CartController {
 //    @ResponseStatus(HttpStatus.OK)
 //    public Integer pullSumOfOrder() {
 //        return cartService.getTotalPrice();
-//    }
-
-    //    @GetMapping("/cart/all")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<CartItem> findAllInCart(Principal principal) {
-//        return cartService.findAllInCart(principal.getName());
 //    }
 
 }

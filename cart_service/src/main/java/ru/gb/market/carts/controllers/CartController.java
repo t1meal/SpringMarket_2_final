@@ -14,7 +14,6 @@ import java.security.Principal;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-
 public class CartController {
 
     private final CartService cartService;
@@ -33,8 +32,8 @@ public class CartController {
 
     @PostMapping("/cart")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInCart(@RequestBody ProductDto productDto, String userName) {
-        cartService.addProduct(userName,productDto);
+    public void addProductInCart(Principal principal, @RequestBody ProductDto productDto) {
+        cartService.addProduct(principal.getName(), productDto);
     }
 
     @DeleteMapping("/cart/item/{id}")

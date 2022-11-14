@@ -1,4 +1,4 @@
-package ru.gb.market.core.utils;
+package ru.gb.market.core.configs;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

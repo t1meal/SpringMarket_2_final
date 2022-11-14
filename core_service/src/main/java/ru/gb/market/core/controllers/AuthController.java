@@ -12,7 +12,7 @@ import ru.gb.market.api.dto.AuthRequest;
 import ru.gb.market.api.dto.AuthResponse;
 import ru.gb.market.api.exceptions.MarketError;
 import ru.gb.market.core.services.UserService;
-import ru.gb.market.core.utils.JwtTokenUtil;
+import ru.gb.market.core.configs.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/api/v1")

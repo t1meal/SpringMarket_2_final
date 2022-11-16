@@ -13,7 +13,7 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+
 public class CartController {
 
     private final CartService cartService;

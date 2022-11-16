@@ -1,4 +1,4 @@
-package ru.gb.market.core.entities;
+package ru.gb.market.auth.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @Table(name = "privileges")
-public class Privilege {
+public class PrivilegeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,7 +23,7 @@ public class Privilege {
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
-    Collection<Role> roles;
+    Collection<RoleEntity> roles;
 
     @CreationTimestamp
     @Column(name = "created_at")

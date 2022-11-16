@@ -1,4 +1,3 @@
 server:
-  port: 8095
-  servlet:
-    context-path: /market-front
+  port: 3000
+

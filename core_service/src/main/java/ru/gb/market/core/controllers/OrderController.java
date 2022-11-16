@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.core.services.OrderService;
-import java.security.Principal;
-
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 
 public class OrderController {
 
@@ -18,8 +15,8 @@ public class OrderController {
 
     @GetMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(Principal principal) {
-        orderService.createOrder(principal.getName());
+    public void createOrder(@RequestHeader String userName) {
+        orderService.createOrder(userName);
     }
 
 }

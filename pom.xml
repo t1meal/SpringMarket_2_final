@@ -5,7 +5,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>api</module>
+        <module>cart_service</module>
+        <module>core_service</module>
         <module>front_end_service</module>
+        <module>gateway_service</module>
+        <module>auth_service</module>
     </modules>
 
     <parent>

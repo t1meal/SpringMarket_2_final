@@ -1,4 +1,4 @@
-package ru.gb.market.core.entities;
+package ru.gb.market.auth.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,15 +34,9 @@ public class UserEntity {
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Collection<Role> roles;
+    private Collection<RoleEntity> roles;
 
     public UserEntity() {
-    }
-
-    public UserEntity(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
     }
 
     @CreationTimestamp

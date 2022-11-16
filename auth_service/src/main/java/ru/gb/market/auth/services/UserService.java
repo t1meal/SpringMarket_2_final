@@ -1,4 +1,4 @@
-package ru.gb.market.core.services;
+package ru.gb.market.auth.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,18 +7,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.api.dto.NewUserDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.core.entities.Privilege;
-import ru.gb.market.core.entities.Role;
-import ru.gb.market.core.entities.UserEntity;
-import ru.gb.market.core.integrations.CartServiceIntegration;
-import ru.gb.market.core.mappers.UserMapper;
-import ru.gb.market.core.repositories.UserRepository;
-import ru.gb.market.core.utils.BCPassEncoder;
-import ru.gb.market.core.utils.RoleGenerator;
+import ru.gb.market.auth.configs.RoleGenerator;
+import ru.gb.market.auth.entities.PrivilegeEntity;
+import ru.gb.market.auth.entities.RoleEntity;
+import ru.gb.market.auth.entities.UserEntity;
+import ru.gb.market.auth.mappers.UserMapper;
+import ru.gb.market.auth.repositories.UserRepository;
 
 
 import java.util.ArrayList;
@@ -32,13 +31,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final BCPassEncoder passEncoder;
+    private final BCryptPasswordEncoder passEncoder;
 
     private final RoleGenerator roleGenerator;
 
     private final UserMapper userMapper;
-
-    private final CartServiceIntegration cartServiceIntegration;
 
 
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -62,11 +59,10 @@ public class UserService implements UserDetailsService {
             }
         }
         UserEntity newUser = userMapper.dtoToEntity(user);
-        String encryptedPassword = passEncoder.getPasswordEncoder().encode(user.getPassword());
+        String encryptedPassword = passEncoder.encode(user.getPassword());
         newUser.setPassword(encryptedPassword);
         newUser.setRoles(roleGenerator.addOneRole("ROLE_USER"));
         userRepository.save(newUser);
-        cartServiceIntegration.createCart(newUser.getId());
     }
 
     @Override
@@ -81,15 +77,15 @@ public class UserService implements UserDetailsService {
     //    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
 //        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 //    }
-    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
+    private Collection<? extends GrantedAuthority> getAuthorities(Collection<RoleEntity> roles) {
         List<String> rolesAndPrivilegeList = new ArrayList<>();
-        List<Privilege> privilegeList = new ArrayList<>();
+        List<PrivilegeEntity> privilegeList = new ArrayList<>();
 
-        for (Role item : roles) {
+        for (RoleEntity item : roles) {
             rolesAndPrivilegeList.add(item.getName());
             privilegeList.addAll(item.getPrivileges());
         }
-        for (Privilege item : privilegeList) {
+        for (PrivilegeEntity item : privilegeList) {
             rolesAndPrivilegeList.add(item.getName());
         }
         return rolesAndPrivilegeList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());

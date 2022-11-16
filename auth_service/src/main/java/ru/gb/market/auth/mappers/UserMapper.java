@@ -1,4 +1,4 @@
-package ru.gb.market.core.mappers;
+package ru.gb.market.auth.mappers;
 
 
 import lombok.RequiredArgsConstructor;
@@ -6,22 +6,21 @@ import org.springframework.stereotype.Component;
 import ru.gb.market.api.dto.NewUserDto;
 import ru.gb.market.api.dto.UserDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.core.entities.Role;
-import ru.gb.market.core.entities.UserEntity;
-import ru.gb.market.core.services.RoleService;
+import ru.gb.market.auth.entities.RoleEntity;
+import ru.gb.market.auth.entities.UserEntity;
+import ru.gb.market.auth.services.RoleService;
+
 
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
-
-    private final RoleService roleService;
 
     public UserDto entityToDto(UserEntity user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
-        Role role = user.getRoles().stream()
+        RoleEntity role = user.getRoles().stream()
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Role fo user " + user.getUsername() + " is not found!"));
         userDto.setRole(role.getName());

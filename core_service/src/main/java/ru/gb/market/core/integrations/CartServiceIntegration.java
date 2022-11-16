@@ -3,21 +3,17 @@ package ru.gb.market.core.integrations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.gb.market.api.dto.CartDto;
-import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
 
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class CartServiceIntegration {
 
-    private final WebClient cartServiceWeClient;
+    private final WebClient webClient;
 
 //    public Optional<CartDto> getCartByUserId (Long id){
 //        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8090/market-carts/api/v1/cart/" + id, CartDto.class));
@@ -31,9 +27,9 @@ public class CartServiceIntegration {
 //        restTemplate.put("http://localhost:8090/market-carts/api/v1/cart/create/" + id, Object.class);
 //    }
 
-    public CartDto getUserCart(Long userId) {
-        CartDto cartDto = cartServiceWeClient.get()
-                .uri("http://localhost:8090/market-carts/api/v1/cart/" + userId)
+    public CartDto getUserCart() {
+        return webClient.get()
+                .uri("http://localhost:8090/market-carts/api/v1/cart/")
                 .retrieve()
                 .onStatus(
                         httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),
@@ -43,18 +39,12 @@ public class CartServiceIntegration {
                 .block();
     }
 
-    public void addProductToCart(String userName, ProductDto productDto) {
-
-    }
-
-    public void clearUserCart(Long userId) {
-        cartServiceWeClient.delete()
+    public CartDto clearUserCart() {
+        return webClient.delete()
                 .uri("http://localhost:8090/market-carts/api/v1/cart/")
-                .header("userId", userId)
                 .retrieve()
-                .toBodilessEntity()
+                .bodyToMono(CartDto.class)
                 .block();
     }
-
 
 }

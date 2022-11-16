@@ -1,4 +1,4 @@
-package ru.gb.market.core.controllers;
+package ru.gb.market.auth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.AuthRequest;
 import ru.gb.market.api.dto.AuthResponse;
 import ru.gb.market.api.exceptions.MarketError;
-import ru.gb.market.core.services.UserService;
-import ru.gb.market.core.configs.JwtTokenUtil;
+import ru.gb.market.auth.configs.JwtTokenUtil;
+import ru.gb.market.auth.services.UserService;
 
 @RestController
 @RequestMapping("/api/v1")

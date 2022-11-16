@@ -3,18 +3,17 @@ package ru.gb.market.core.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.core.services.ProductService;
-import ru.gb.market.core.utils.BindingResultService;
+
 
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+
 
 public class ProductController {
     private final ProductService productService;
@@ -23,7 +22,6 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ProductDto> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
         return productService.findAll(pageIndex, 10);
-
     }
 
     @GetMapping("/products/{id}")
@@ -34,9 +32,8 @@ public class ProductController {
 
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduct(@RequestBody @Validated ProductDto productDto, BindingResult bindingResult) {
-        BindingResultService.checkError(bindingResult);
-        productService.save(productDto);
+    public void saveProduct(@RequestBody @Validated ProductDto productDto) {
+            productService.save(productDto);
     }
 
     @PutMapping("/products")

@@ -1,4 +1,4 @@
-package ru.gb.market.core.exceptions;
+package ru.gb.market.api.exceptions;
 
 
 

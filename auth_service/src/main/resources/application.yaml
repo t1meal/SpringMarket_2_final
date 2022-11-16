@@ -1,7 +1,7 @@
 server:
-  port: 8080
+  port: 8100
   servlet:
-    context-path: /market-core
+    context-path: /market-auth
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -17,15 +17,11 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
 
-#jwt:
-#  secret: fasdfo3451kb12l3k4h12k5h2lkj5h12lk3b5l12kg61l2k451lk15l43k5h1
-#  lifetime: 360000
-integrations:
-  cart-service:
-    url: http://localhost:8090/market-carts
-    read-timeout: 10000
-    write-timeout: 5000
-    connect-timeout: 5000
+jwt:
+  secret: fasdfo3451kb12l3k4h12k5h2lkj5h12lk3b5l12kg61l2k451lk15l43k5h1
+  lifetime: 360000
+
+
 
 
 #server.port=8080

@@ -1,4 +1,4 @@
-package ru.gb.market.core.controllers;
+package ru.gb.market.auth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -7,10 +7,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.NewUserDto;
 import ru.gb.market.api.dto.UserDto;
-import ru.gb.market.core.entities.UserEntity;
-import ru.gb.market.core.mappers.UserMapper;
-import ru.gb.market.core.services.UserService;
-import ru.gb.market.core.utils.BindingResultService;
+import ru.gb.market.auth.configs.BindingResultService;
+import ru.gb.market.auth.mappers.UserMapper;
+import ru.gb.market.auth.services.UserService;
+
 
 @RestController
 @RequestMapping("/api/v1")

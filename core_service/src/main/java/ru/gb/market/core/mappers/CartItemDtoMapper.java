@@ -18,6 +18,7 @@ public class CartItemDtoMapper {
 
     public List<OrderItem> mapToOrderItems(List<CartItemDto> items) {
         List<OrderItem> orderItems = new ArrayList<>();
+
         for (CartItemDto item : items) {
             OrderItem orderItem = new OrderItem(item.getCount(), item.getPrice(), item.getSum());
             orderItem.setProduct(productService.findProductById(item.getProductId()));

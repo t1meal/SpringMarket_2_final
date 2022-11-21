@@ -20,20 +20,22 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartItemDtoMapper cartItemDtoMapper;
-
     private final CartServiceIntegration cartServiceIntegration;
 
     @Transactional
     public void createOrder(String userName) {
-        CartDto cartDto = cartServiceIntegration.getUserCart();
-        List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems());
+        CartDto cartDto = cartServiceIntegration.getUserCart(userName);
 
         Order order = new Order();
         order.setUsername(userName);
         order.setTotalPrice(cartDto.getTotalPrice());
-        order.setItems(cartItemDtoMapper.mapToOrderItems(cartDto.getItems()));
         orderRepository.save(order);
-        orderItemRepository.saveAll(cartItemDtoMapper.setOrder(items, order));
-        cartServiceIntegration.clearUserCart();
+
+        List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems());
+        List <OrderItem> orderItems = cartItemDtoMapper.setOrder(items, order);
+
+        order.setItems(orderItems);
+        orderRepository.save(order);
+        orderItemRepository.saveAll(orderItems);
     }
 }

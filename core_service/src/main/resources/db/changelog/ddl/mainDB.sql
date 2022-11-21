@@ -1,6 +1,15 @@
 --liquibase formatted sql
 
---changeset t1meal: create_main_table
+--changeset t1meal: init_core_table
+
+create table categories
+(
+    id         bigserial primary key,
+    title      varchar(255) not null,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+);
+
 create table products
 (
     id          bigserial primary key,
@@ -35,13 +44,7 @@ create table order_items
 
 );
 
-create table categories
-(
-    id         bigserial primary key,
-    title      varchar(255) not null,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp
-);
+
 
 
 

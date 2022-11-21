@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset t1meal: add_data_mainDB
+--changeset t1meal: insert_first_users_data
 
 insert into users (username, password, email)
 values ('user', '$2a$12$AzQ.SQRayi4zzUZD0FziheAIQqtqzIeL2GyRi6wxw59X5XB5W.0ci', 'user@gmail.com'),

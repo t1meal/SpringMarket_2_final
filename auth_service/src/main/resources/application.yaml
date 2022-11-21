@@ -1,5 +1,5 @@
 server:
-  port: 8100
+  port: 6000
   servlet:
     context-path: /market-auth
 spring:
@@ -18,8 +18,8 @@ spring:
     change-log: classpath:db/changelog/changelog-master.xml
 
 jwt:
-  secret: fasdfo3451kb12l3k4h12k5h2lkj5h12lk3b5l12kg61l2k451lk15l43k5h1
-  lifetime: 360000
+  secret: h4f8093h4f983yhrt9834hr0934hf0hf493g493gf438rh438th34g34g
+  lifetime: 3600000
 
 
 

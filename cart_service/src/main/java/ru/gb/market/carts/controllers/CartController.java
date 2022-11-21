@@ -7,63 +7,54 @@ import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.carts.services.CartService;
 
-import java.security.Principal;
-
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 
 public class CartController {
 
     private final CartService cartService;
 
-    @PutMapping ("/cart/create/{id}")
+    @PutMapping ("/create/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void newCart (@PathVariable Long id){
         cartService.createCart(id);
     }
 
-    @GetMapping("/cart/{id}")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public CartDto getCurrentCart(@PathVariable Long id) {
-        return cartService.getCurrentCart(id);
+    public CartDto getCurrentCart(@RequestHeader String userName) {
+        return cartService.getCurrentCart(userName);
     }
 
-    @PostMapping("/cart")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInCart(Principal principal, @RequestBody ProductDto productDto) {
-        cartService.addProduct(principal.getName(), productDto);
+    public void addProductInCart(@RequestHeader String userName, @RequestBody ProductDto productDto) {
+        cartService.addProduct(userName, productDto);
     }
 
-    @DeleteMapping("/cart/item/{id}")
+    @PutMapping("/item/inc/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteItemFromCart(@PathVariable Long id) {
-        cartService.deleteItem(id);
+    public CartDto incCountOfItem(@RequestHeader String userName, @PathVariable Long id) {
+        return cartService.changeQuantityOfItem(userName, id, 1);
     }
 
-    @PutMapping("/cart/inc/{id}")
+    @PutMapping("/item/dec/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void incCountOfItem(@PathVariable Long id) {
-        cartService.incDecCountOfItem(id, 1);
+    public CartDto decCountOfItem(@RequestHeader String userName, @PathVariable Long id) {
+        return cartService.changeQuantityOfItem(userName, id, -1);
     }
 
-    @PutMapping("/cart/dec/{id}")
+    @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void decCountOfItem(@PathVariable Long id) {
-        cartService.incDecCountOfItem( id, -1);
+    public void clearCart(@RequestHeader String userName){
+        cartService.clearCart(userName);
     }
-
-    @DeleteMapping("/cart")
+    @DeleteMapping("/item/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void clearCart(Long id){
-        cartService.clearCart(id);
+    public void deleteItemFromCart(@RequestHeader String userName, @PathVariable Long id) {
+        cartService.deleteItem(userName, id);
     }
-
-//    @GetMapping("/cart/sum")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Integer pullSumOfOrder() {
-//        return cartService.getTotalPrice();
-//    }
 
 }

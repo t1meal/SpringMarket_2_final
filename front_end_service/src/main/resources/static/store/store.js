@@ -1,14 +1,14 @@
 angular.module('market_front').controller('storeController', function ($scope, $http, $location, $localStorage) {
 
-    const contextPath = 'http://localhost:5555/core/api/v1/';
-    const contextPathCarts = 'http://localhost:5555/cart/api/v1';
+    const corePath = 'http://localhost:5000/core/api/v1/';
+    const cartPath = 'http://localhost:5000/cart/api/v1';
 
     let currentPage = 1;
 
 
     $scope.loadProducts = function (pageIndex) {
         $http({
-            url: contextPath + 'products',
+            url: corePath + 'products',
             method: 'GET',
             params: {
                 p: pageIndex
@@ -22,7 +22,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
     }
 
     $scope.deleteProduct = function (product) {
-        $http.delete(contextPath + 'products/' + product.id)
+        $http.delete(corePath + 'products/' + product.id)
             .then(function () {
                 $scope.loadProducts(currentPage);
             });
@@ -59,7 +59,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
     }
 
     $scope.addProductToCart = function (p) {
-        $http.post(contextPathCarts + '/cart', p, $localStorage.webMarketUser.username)
+        $http.post(cartPath + '/cart', p)
             .then(
                 function successCallback() {
                     alert('ОК');
@@ -69,10 +69,9 @@ angular.module('market_front').controller('storeController', function ($scope, $
                 });
     }
     // $scope.checkEmptyCart = function () {
-    //     $http.get(contextPath + 'products/cart/empty')
+    //     $http.get(corePath + 'products/cart/empty')
     //
     // }
-
 
     $scope.loadProducts();
     // $scope.checkEmptyCart();

@@ -1,6 +1,6 @@
 angular.module('market_front').controller('editProductController', function ($scope, $http, $routeParams, $location) {
 
-    const contextPath = 'http://localhost:5555/core/api/v1/';
+    const contextPath = 'http://localhost:5000/core/api/v1/';
 
     $scope.prepareProductForUpdate = function () {
         $http.get(contextPath + 'products/' + $routeParams.productId)

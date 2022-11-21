@@ -11,7 +11,6 @@ import ru.gb.market.auth.configs.BindingResultService;
 import ru.gb.market.auth.mappers.UserMapper;
 import ru.gb.market.auth.services.UserService;
 
-
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getUserByUsername (String name){
-       return userMapper.entityToDto(userService.findByUsername(name).get());
+    public UserDto getUserByUsername (@RequestHeader String userName){
+       return userMapper.entityToDto(userService.findByUsername(userName).get());
     }
 }

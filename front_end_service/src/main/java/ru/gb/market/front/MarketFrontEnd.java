@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringMarketFrontEnd {
+public class MarketFrontEnd {
     public static void main(String[] args) {
-        SpringApplication.run(SpringMarketFrontEnd.class, args);
+        SpringApplication.run(MarketFrontEnd.class, args);
     }
 }
 

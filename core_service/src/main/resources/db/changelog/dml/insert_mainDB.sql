@@ -1,6 +1,11 @@
 --liquibase formatted sql
 
---changeset t1meal: add_data_mainDB
+--changeset t1meal: insert_core_data
+
+INSERT INTO categories (title)
+VALUES ('Food'),
+       ('Others');
+
 insert into products (title, price, category_id)
 values ('bread', 40, 1),
        ('bread1', 100, 1),
@@ -19,9 +24,7 @@ values ('bread', 40, 1),
        ('oil', 1500, 2)
 ;
 
-INSERT INTO categories (title)
-VALUES ('Food'),
-       ('Others');
+
 
 
 

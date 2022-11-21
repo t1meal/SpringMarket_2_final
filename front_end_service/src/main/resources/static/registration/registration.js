@@ -1,6 +1,6 @@
 angular.module('market_front').controller('registrationController', function ($scope, $http, $routeParams, $location) {
 
-    const contextPath = 'http://localhost:5555/auth/api/v1/';
+    const contextPath = 'http://localhost:5000/auth/api/v1/';
 
     $scope.tryToRegistration = function () {
         if ($scope.new_user == null){

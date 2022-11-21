@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.carts.models.Cart;
+import ru.gb.market.carts.models.CartItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -16,7 +19,11 @@ public class CartConverter {
         CartDto cartDto = new CartDto();
         cartDto.setId(cart.getId());
         cartDto.setTotalPrice(cart.getTotalPrice());
-        cartDto.setItems(cart.getItems().stream().map(cartItemConverter::entityToDto).collect(Collectors.toList()));
+        List <CartItem> modifyList = new ArrayList<>(cart.getItems());
+        cartDto.setItems
+                (modifyList.stream()
+                        .map(cartItemConverter::entityToDto)
+                        .collect(Collectors.toList()));
         return cartDto;
     }
 

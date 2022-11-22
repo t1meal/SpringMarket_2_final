@@ -19,6 +19,12 @@ public class CartConverter {
         CartDto cartDto = new CartDto();
         cartDto.setId(cart.getId());
         cartDto.setTotalPrice(cart.getTotalPrice());
+
+        if (cart.getItems() == null){
+            cartDto.setItems(new ArrayList<>());
+            return cartDto;
+        }
+
         List <CartItem> modifyList = new ArrayList<>(cart.getItems());
         cartDto.setItems
                 (modifyList.stream()

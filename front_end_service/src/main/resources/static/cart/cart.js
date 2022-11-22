@@ -4,21 +4,21 @@ angular.module('market_front').controller('cartProductController', function ($sc
 
     const corePath = 'http://localhost:5000/core/api/v1';
 
-    $scope.injectCart = function (r) {
-        $scope.cartItems = r.data.items;
-        $scope.sumOfOrder = r.data.totalPrice;
+    $scope.injectCart = function (response) {
+        $scope.cartItems = response.data.items;
+        $scope.sumOfOrder = response.data.totalPrice;
     }
 
     $scope.loadCartProducts = function () {
         $http.get(cartPath)
-            .then(function (response) {
+            .then(function successCallback(response) {
                 $scope.injectCart(response);
             });
     }
 
     $scope.deleteProductFromCart = function (item) {
         $http.delete(cartPath + '/item/' + item.productId)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                     $scope.loadCartProducts();
                     alert("Продукт удален!")
                 },

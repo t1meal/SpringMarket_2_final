@@ -8,7 +8,6 @@ import ru.gb.market.core.entities.Order;
 import ru.gb.market.core.entities.OrderItem;
 import ru.gb.market.core.integrations.CartServiceIntegration;
 import ru.gb.market.core.mappers.CartItemDtoMapper;
-import ru.gb.market.core.repositories.OrderItemRepository;
 import ru.gb.market.core.repositories.OrderRepository;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
+
     private final CartItemDtoMapper cartItemDtoMapper;
     private final CartServiceIntegration cartServiceIntegration;
 
@@ -29,13 +28,13 @@ public class OrderService {
         Order order = new Order();
         order.setUsername(userName);
         order.setTotalPrice(cartDto.getTotalPrice());
-        orderRepository.save(order);
 
         List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems());
-        List <OrderItem> orderItems = cartItemDtoMapper.setOrder(items, order);
+        List<OrderItem> itemList = cartItemDtoMapper.setOrder(items, order);
 
-        order.setItems(orderItems);
+        order.setItems(itemList);
+        order.setUser_email("user@yandex.ru"); // TODO заменить заглушку инжектом юзера
+
         orderRepository.save(order);
-        orderItemRepository.saveAll(orderItems);
     }
 }

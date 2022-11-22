@@ -17,7 +17,6 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-
     private final CartItemDtoMapper cartItemDtoMapper;
     private final CartServiceIntegration cartServiceIntegration;
 
@@ -33,7 +32,7 @@ public class OrderService {
         List<OrderItem> itemList = cartItemDtoMapper.setOrder(items, order);
 
         order.setItems(itemList);
-        order.setUser_email("user@yandex.ru"); // TODO заменить заглушку инжектом юзера
+        order.setUser_email("user@yandex.ru");
 
         orderRepository.save(order);
     }

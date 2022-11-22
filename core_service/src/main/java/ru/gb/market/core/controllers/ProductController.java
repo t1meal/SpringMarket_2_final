@@ -14,7 +14,6 @@ import ru.gb.market.core.services.ProductService;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 
-
 public class ProductController {
     private final ProductService productService;
 

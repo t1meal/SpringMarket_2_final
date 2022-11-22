@@ -17,7 +17,7 @@ import ru.gb.market.auth.services.UserService;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+//@CrossOrigin("*")
 
 public class AuthController {
     private final UserService userService;

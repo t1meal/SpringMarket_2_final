@@ -29,9 +29,10 @@ public class Cart implements Serializable {
         this.totalPrice = 0;
     }
 
-    public List<CartItem> getItems (){
-        return Collections.unmodifiableList(items); // TODO подредачить код под геттер
-    }
+//    public List<CartItem> getItems (){
+//        return Collections.unmodifiableList(items);
+//    }
+
     public void setNewItem (CartItem cartItem){
         List<CartItem> cartItems = new ArrayList<>(this.items);
         cartItems.add(cartItem);

@@ -1,26 +1,26 @@
 angular.module('market_front').controller('cartProductController', function ($scope, $http) {
 
-    const contextPathCart = 'http://localhost:5555/cart/api/v1';
-    const contextPathCore = 'http://localhost:5555/core/api/v1';
+    const cartPath = 'http://localhost:5000/cart/api/v1/cart';
+
+    const corePath = 'http://localhost:5000/core/api/v1';
+
+    $scope.injectCart = function (response) {
+        $scope.cartItems = response.data.items;
+        $scope.sumOfOrder = response.data.totalPrice;
+    }
 
     $scope.loadCartProducts = function () {
-        $http.get(contextPathCore + '/cart')
-            .then(function (response) {
-                $scope.cartItems = response.data.cartItems;
-            });
-    }
-    $scope.loadSumOrder = function () {
-        $http.get(contextPathCart + '/cart/sum')
-            .then(function (response) {
-                $scope.sumOfOrder = response.data;
+        $http.get(cartPath)
+            .then(function successCallback(response) {
+                $scope.injectCart(response);
             });
     }
 
     $scope.deleteProductFromCart = function (item) {
-        $http.delete(contextPathCart + '/cart/' + item.productId)
+        $http.delete(cartPath + '/item/' + item.productId)
             .then(function successCallback() {
                     $scope.loadCartProducts();
-                    $scope.loadSumOrder();
+                    alert("Продукт удален!")
                 },
                 function failCallback(response) {
                     alert(response.data.messages);
@@ -28,20 +28,18 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.incCountOfProduct = function (item) {
-        $http.put(contextPathCart + '/cart/inc/' + item.productId)
-            .then(function successCallback() {
-                    $scope.loadCartProducts();
-                    $scope.loadSumOrder();
+        $http.put(cartPath + '/item/inc/' + item.productId)
+            .then(function successCallback(response) {
+                    $scope.injectCart(response);
                 },
                 function failCallback(response) {
                     alert(response.data.messages);
                 });
     }
     $scope.decCountOfProduct = function (item) {
-        $http.put(contextPathCart + '/cart/dec/' + item.productId)
-            .then(function successCallback() {
-                    $scope.loadCartProducts();
-                    $scope.loadSumOrder();
+        $http.put(cartPath + '/item/dec/' + item.productId)
+            .then(function successCallback(response) {
+                    $scope.injectCart(response);
                 },
                 function failCallback(response) {
                     alert(response.data.messages);
@@ -49,11 +47,10 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.removeAllProductsInCart = function () {
-        $http.delete(contextPathCart + '/cart')
+        $http.delete(cartPath)
             .then(function successCallback() {
-                    alert("Корзина очищена");
+                    alert("Корзина очищена!");
                     $scope.loadCartProducts();
-                    $scope.loadSumOrder();
                 },
                 function failCallback() {
                     alert("Невозможно очистить корзину!");
@@ -62,19 +59,16 @@ angular.module('market_front').controller('cartProductController', function ($sc
     }
 
     $scope.sendOrder = function () {
-        $http.get(contextPathCart + '/order')
+        $http.get(corePath + '/order')
             .then(function successCallback() {
                     alert("Заказ успешно размещен!");
                     $scope.removeAllProductsInCart();
-                    $scope.loadSumOrder();
+                    $scope.loadCartProducts();
                 },
                 function failCallback(response) {
                     alert(response.data.messages);
                 });
-
     }
 
     $scope.loadCartProducts();
-    $scope.loadSumOrder();
-
 });

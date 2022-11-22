@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset t1meal: create_main_table
+--changeset t1meal: init_main_auth_tables
 
 create table users
 (

@@ -1,5 +1,5 @@
 server:
-  port: 5555
+  port: 5000
 
 spring:
   application:
@@ -34,7 +34,7 @@ spring:
             - PrefixPath=/market-carts
             - JwtAuthFilter
         - id: auth-service
-          uri: http://localhost:8100
+          uri: http://localhost:6000
           predicates:
             - Path=/auth/**
           filters:

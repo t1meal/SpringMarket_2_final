@@ -12,6 +12,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public Category findCategoryByTitle(String title){
-        return categoryRepository.findByTitle(title).orElseThrow(() -> new ResourceNotFoundException("Category with title " + title + " not found!"));
+        return categoryRepository.findByTitle(title)
+                .orElseThrow(() -> new ResourceNotFoundException("Category with title " + title + " not found!"));
     }
 }

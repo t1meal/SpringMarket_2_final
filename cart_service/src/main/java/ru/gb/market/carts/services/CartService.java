@@ -46,7 +46,7 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public void addProduct(String userName, ProductDto productDto) {
+    public void addProductToCart(String userName, ProductDto productDto) {
         Long userId = cartServiceUtils.pullUserId(userName);
         Optional <Cart> cart = cartServiceUtils.findCartByIdUtil(userId);
         if (cart.isEmpty()){

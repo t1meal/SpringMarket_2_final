@@ -31,7 +31,7 @@ public class CartController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void addProductInCart(@RequestHeader String userName, @RequestBody ProductDto productDto) {
-        cartService.addProduct(userName, productDto);
+        cartService.addProductToCart(userName, productDto);
     }
 
     @PutMapping("/item/inc/{id}")

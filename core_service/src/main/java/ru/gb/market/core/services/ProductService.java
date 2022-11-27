@@ -12,6 +12,9 @@ import ru.gb.market.core.entities.ProductEntity;
 
 import ru.gb.market.core.repositories.ProductRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -23,9 +26,12 @@ public class ProductService {
         if (pageIndex < 1) {
             pageIndex = 1;
         }
-        Page<ProductDto> page = productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize))
+        return productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize))
                 .map(productConverter::entityToDto);
-        return page;
+    }
+
+    public List<ProductDto> findAllProducts() {
+        return productRepository.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 
     public ProductDto findProductDtoById(Long id) {
@@ -39,7 +45,7 @@ public class ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
     }
 
-    public void save(ProductDto productDto) {
+    public void createNewProduct(ProductDto productDto) {
         ProductEntity product = productConverter.dtoToEntity(productDto);
         productRepository.save(product);
     }

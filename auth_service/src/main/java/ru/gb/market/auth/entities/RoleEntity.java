@@ -37,4 +37,9 @@ public class RoleEntity {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    public RoleEntity(String name) {
+        this.name = name;
+    }
+    public RoleEntity() {
+    }
 }

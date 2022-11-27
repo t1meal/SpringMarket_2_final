@@ -7,8 +7,8 @@ import ru.gb.market.core.entities.Order;
 import ru.gb.market.core.entities.OrderItem;
 import ru.gb.market.core.services.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -16,22 +16,17 @@ public class CartItemDtoMapper {
 
     private final ProductService productService;
 
-    public List<OrderItem> mapToOrderItems(List<CartItemDto> items) {
-        List<OrderItem> orderItems = new ArrayList<>();
+    public List<OrderItem> mapToOrderItems(List<CartItemDto> cartItems, Order order) {
 
-        for (CartItemDto item : items) {
-            OrderItem orderItem = new OrderItem(item.getCount(), item.getPrice(), item.getSum());
-            orderItem.setProduct(productService.findProductById(item.getProductId()));
-            orderItems.add(orderItem);
-        }
+        List<OrderItem> orderItems = cartItems.stream().map(cartItem -> new OrderItem(
+                cartItem.getCount(),
+                cartItem.getPrice(),
+                cartItem.getSum(),
+                productService.findProductById(cartItem.getProductId()))).collect(Collectors.toList());
+
+        orderItems.forEach(orderItem -> orderItem.setOrder(order));
+
         return orderItems;
-    }
-
-    public List<OrderItem> setOrder(List<OrderItem> items, Order order){
-        for (OrderItem item: items) {
-            item.setOrder(order);
-        }
-        return items;
     }
 
 }

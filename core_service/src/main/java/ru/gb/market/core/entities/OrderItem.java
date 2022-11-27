@@ -50,7 +50,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public OrderItem(int count, int pricePerProduct, int sum) {
+    public OrderItem(int count, int pricePerProduct, int sum, ProductEntity product) {
         this.count = count;
         this.pricePerProduct = pricePerProduct;
         this.sum = sum;

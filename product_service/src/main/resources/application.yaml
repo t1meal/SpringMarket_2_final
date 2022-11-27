@@ -1,0 +1,19 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /market-products
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5434/geekmarket
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+

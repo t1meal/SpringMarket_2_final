@@ -1,6 +1,6 @@
 angular.module('market_front').controller('storeController', function ($scope, $http, $location, $localStorage) {
 
-    const corePath = 'http://localhost:5000/core/api/v1/';
+    const productsPath = 'http://localhost:5000/products/api/v1/';
     const cartPath = 'http://localhost:5000/cart/api/v1';
 
     let currentPage = 1;
@@ -8,7 +8,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
 
     $scope.loadProducts = function (pageIndex) {
         $http({
-            url: corePath + 'products',
+            url: productsPath + 'products',
             method: 'GET',
             params: {
                 p: pageIndex
@@ -22,7 +22,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
     }
 
     $scope.deleteProduct = function (product) {
-        $http.delete(corePath + 'products/' + product.id)
+        $http.delete(productsPath + 'products/' + product.id)
             .then(function () {
                 $scope.loadProducts(currentPage);
             });
@@ -69,7 +69,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
                 });
     }
     // $scope.checkEmptyCart = function () {
-    //     $http.get(corePath + 'products/cart/empty')
+    //     $http.get(productsPath + 'products/cart/empty')
     //
     // }
 

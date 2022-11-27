@@ -1,4 +1,4 @@
-package ru.gb.market.core;
+package ru.gb.market.products;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

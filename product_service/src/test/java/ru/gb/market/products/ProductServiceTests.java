@@ -1,4 +1,4 @@
-package ru.gb.market.core;
+package ru.gb.market.products;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.gb.market.api.dto.ProductDto;
-import ru.gb.market.core.entities.Category;
+import ru.gb.market.core.entities.CategoryEntity;
 import ru.gb.market.core.repositories.ProductRepository;
 import ru.gb.market.core.services.CategoryService;
 import ru.gb.market.core.services.ProductService;
@@ -28,7 +28,7 @@ public class ProductServiceTests {
 
     @Test
     public void createNewProductTest() {
-        Category category = new Category();
+        CategoryEntity category = new CategoryEntity();
         category.setId(1L);
         category.setTitle("Food");
         category.setProducts(Collections.emptyList());

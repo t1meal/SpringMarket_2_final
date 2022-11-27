@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.gb.market.api.dto.UserDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.carts.properties.ServicesIntegrationProperties;
+import ru.gb.market.carts.properties.IntegrationProperties;
 
 
 @Component
@@ -15,7 +15,7 @@ import ru.gb.market.carts.properties.ServicesIntegrationProperties;
 public class UserServiceIntegration {
 
     private final WebClient webClient;
-    private final ServicesIntegrationProperties integrationProperties;
+    private final IntegrationProperties integrationProperties;
 
     public UserDto getUserByUserName(String userName) {
         return webClient.get()

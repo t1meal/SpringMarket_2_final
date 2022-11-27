@@ -11,25 +11,25 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
-import ru.gb.market.carts.properties.ServicesIntegrationProperties;
+import ru.gb.market.carts.properties.IntegrationProperties;
 
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableConfigurationProperties(ServicesIntegrationProperties.class)
+@EnableConfigurationProperties(IntegrationProperties.class)
 @RequiredArgsConstructor
 public class AppConfigs {
 
-    private final ServicesIntegrationProperties servicesIntegrationProperties;
+    private final IntegrationProperties integrationProperties;
 
     @Bean
     public WebClient webClient() {
         TcpClient client = TcpClient
                 .create()
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, servicesIntegrationProperties.getConnectTimeout())
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, integrationProperties.getConnectTimeout())
                 .doOnConnected(connection -> {
-                    connection.addHandlerLast(new ReadTimeoutHandler(servicesIntegrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS));
-                    connection.addHandlerLast(new WriteTimeoutHandler(servicesIntegrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS));
+                    connection.addHandlerLast(new ReadTimeoutHandler(integrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS));
+                    connection.addHandlerLast(new WriteTimeoutHandler(integrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS));
                 });
         return WebClient
                 .builder()

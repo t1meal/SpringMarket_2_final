@@ -1,9 +1,9 @@
 angular.module('market_front').controller('editProductController', function ($scope, $http, $routeParams, $location) {
 
-    const contextPath = 'http://localhost:5000/core/api/v1/';
+    const productsPath = 'http://localhost:5000/products/api/v1/';
 
     $scope.prepareProductForUpdate = function () {
-        $http.get(contextPath + 'products/' + $routeParams.productId)
+        $http.get(productsPath + 'products/' + $routeParams.productId)
             .then(
                 function successCallback(response) {
                     $scope.updated_product = response.data;
@@ -14,7 +14,7 @@ angular.module('market_front').controller('editProductController', function ($sc
                 });
     }
     $scope.updateProduct = function () {
-        $http.put(contextPath + 'products', $scope.updated_product)
+        $http.put(productsPath + 'products', $scope.updated_product)
             .then(
                 function successCallback() {
                     $scope.updated_product = null;

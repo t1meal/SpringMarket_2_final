@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.carts.integrations.CoreServiceIntegration;
+import ru.gb.market.carts.integrations.ProductServiceIntegration;
 import ru.gb.market.carts.mappers.CartConverter;
 import ru.gb.market.carts.models.CartItem;
 import ru.gb.market.carts.models.Cart;
@@ -24,7 +24,7 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartServiceUtils cartServiceUtils;
     private final CartConverter cartConverter;
-    private final CoreServiceIntegration coreServiceIntegration;
+    private final ProductServiceIntegration productServiceIntegration;
 
     public void createCart(Long id) {
         Cart cart = new Cart(id);

@@ -19,7 +19,7 @@ spring:
 
 integrations:
   services:
-    core-url: http://localhost:8080/market-core/api/v1
+    products-url: http://localhost:9000/market-products/api/v1
     auth-url: http://localhost:6000/market-auth/api/v1
     read-timeout: 10000
     write-timeout: 5000

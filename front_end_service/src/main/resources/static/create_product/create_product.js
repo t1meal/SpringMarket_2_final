@@ -1,13 +1,13 @@
 angular.module('market_front').controller('createProductController', function ($scope, $http, $routeParams, $location) {
 
-    const contextPath = 'http://localhost:5000/core/api/v1/';
+    const productsPath = 'http://localhost:5000/products/api/v1/';
 
     $scope.createNewProduct = function () {
         if ($scope.new_product == null){
             alert("Form not completed!");
             return;
         }
-        $http.post(contextPath + 'products/', $scope.new_product)
+        $http.post(productsPath + 'products/', $scope.new_product)
             .then(
                 function successCallback(response) {
                     console.log(response);

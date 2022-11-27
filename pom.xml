@@ -10,6 +10,7 @@
         <module>front_end_service</module>
         <module>gateway_service</module>
         <module>auth_service</module>
+        <module>product_service</module>
     </modules>
 
     <parent>

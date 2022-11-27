@@ -1,4 +1,4 @@
-package ru.gb.market.core.entities;
+package ru.gb.market.products.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public class ProductEntity {
 
     @ManyToOne
     @JoinColumn (name = "category_id")
-    private Category category;
+    private CategoryEntity category;
 
 //    public ProductEntity(String title, int price) {
 //        this.title = title;

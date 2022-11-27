@@ -1,12 +1,14 @@
-package ru.gb.market.core.controllers;
+package ru.gb.market.products.controllers;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.ProductDto;
-import ru.gb.market.core.services.ProductService;
+
+import ru.gb.market.products.services.ProductService;
 
 import java.util.List;
 

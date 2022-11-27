@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConstructorBinding
 @ConfigurationProperties (prefix = "integrations.services")
 @Data
-public class ServicesIntegrationProperties {
-    private String coreUrl;
+public class IntegrationProperties {
+    private String productsUrl;
     private String authUrl;
     private Integer readTimeout;
     private Integer writeTimeout;

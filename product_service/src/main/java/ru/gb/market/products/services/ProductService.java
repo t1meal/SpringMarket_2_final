@@ -1,4 +1,4 @@
-package ru.gb.market.core.services;
+package ru.gb.market.products.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.core.mappers.ProductConverter;
-import ru.gb.market.core.entities.ProductEntity;
-
-import ru.gb.market.core.repositories.ProductRepository;
+import ru.gb.market.products.entities.ProductEntity;
+import ru.gb.market.products.mappers.ProductConverter;
+import ru.gb.market.products.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

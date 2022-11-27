@@ -9,15 +9,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.CartItemDto;
-import ru.gb.market.core.entities.Category;
+
+import ru.gb.market.api.dto.CategoryDto;
+import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.core.entities.Order;
 import ru.gb.market.core.entities.OrderItem;
-import ru.gb.market.core.entities.ProductEntity;
+
 import ru.gb.market.core.integrations.CartServiceIntegration;
+import ru.gb.market.core.integrations.ProductServiceIntegration;
 import ru.gb.market.core.mappers.CartItemDtoMapper;
 import ru.gb.market.core.repositories.OrderRepository;
 import ru.gb.market.core.services.OrderService;
-import ru.gb.market.core.services.ProductService;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +36,13 @@ public class OrderServiceTest {
     @MockBean
     private CartServiceIntegration cartServiceIntegration;
     @MockBean
-    private ProductService productService;
+    private ProductServiceIntegration productService;
 
     @MockBean
     private OrderRepository orderRepository;
 
     @Test
-    public void orderServiceTest (){
+    public void orderServiceTest (){ // TODO проверить данные для теста!
         CartDto cartDto = new CartDto();
         CartItemDto cartItemDto = new CartItemDto();
         cartDto.setId(1L);
@@ -53,17 +56,14 @@ public class OrderServiceTest {
 
         Mockito.doReturn(cartDto).when(cartServiceIntegration).getUserCart("Bob");
 
-        ProductEntity product = new ProductEntity();
-        Category category = new Category();
-        category.setId(1L);
-        category.setTitle("Food");
+        ProductDto product = new ProductDto();
 
         product.setId(512L);
         product.setTitle("bread");
         product.setPrice(60);
-        product.setCategory(category);
+        product.setCategoryTitle("Food");
 
-        Mockito.doReturn(product).when(productService).findProductById(512L);
+        Mockito.doReturn(product).when(productService).getProductById(512L);
 
         Order order = orderService.createOrder("Bob");
         Assertions.assertEquals(order.getTotalPrice(), 120);

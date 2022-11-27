@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.gb.market.api.dto.ProductDto;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -23,6 +24,9 @@ public class OrderItem {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column (name = "product_title")
+    private String title;
 
     @Column(name = "count")
     private int count;
@@ -43,14 +47,11 @@ public class OrderItem {
 
 /////////
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
-
-    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public OrderItem(int count, int pricePerProduct, int sum, ProductEntity product) {
+    public OrderItem(String title, int count, int pricePerProduct, int sum) {
+        this.title = title;
         this.count = count;
         this.pricePerProduct = pricePerProduct;
         this.sum = sum;

@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.core.properties.CartServiceIntegrationProperties;
+import ru.gb.market.core.properties.IntegrationProperties;
 
 
 @Component
@@ -15,7 +15,7 @@ import ru.gb.market.core.properties.CartServiceIntegrationProperties;
 public class CartServiceIntegration {
 
     private final WebClient cartServiceWebClient;
-    private final CartServiceIntegrationProperties cartServiceProperties;
+    private final IntegrationProperties cartServiceProperties;
 
     public CartDto getUserCart(String userName) {
         return cartServiceWebClient.get()

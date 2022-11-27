@@ -1,12 +1,12 @@
-package ru.gb.market.core.mappers;
+package ru.gb.market.products.mappers;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.gb.market.api.dto.ProductDto;
-import ru.gb.market.core.entities.Category;
-import ru.gb.market.core.entities.ProductEntity;
-import ru.gb.market.core.services.CategoryService;
+import ru.gb.market.products.entities.CategoryEntity;
+import ru.gb.market.products.entities.ProductEntity;
+import ru.gb.market.products.services.CategoryService;
 
 
 @Component
@@ -29,7 +29,7 @@ public class ProductConverter {
         product.setId(productDto.getId());
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
-        Category c =  categoryService.findCategoryByTitle(productDto.getCategoryTitle());
+        CategoryEntity c =  categoryService.findCategoryByTitle(productDto.getCategoryTitle());
         product.setCategory(c);
         return product;
     }

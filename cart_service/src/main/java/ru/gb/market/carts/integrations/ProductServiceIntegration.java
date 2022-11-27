@@ -5,22 +5,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
-import ru.gb.market.carts.properties.ServicesIntegrationProperties;
+import ru.gb.market.carts.properties.IntegrationProperties;
 
 
 @Component
 @RequiredArgsConstructor
-public class CoreServiceIntegration {
+public class ProductServiceIntegration {
 
-    private final WebClient coreServiceWebClient;
-    private final ServicesIntegrationProperties integrationProperties;
+    private final WebClient webClient;
+    private final IntegrationProperties integrationProperties;
 
     public ProductDto getProductById(Long id) {
-        return coreServiceWebClient.get()
-                .uri(integrationProperties.getCoreUrl() + "/product")
+        return webClient.get()
+                .uri(integrationProperties.getProductsUrl() + "/products/" + id)
                 .retrieve()
                 .onStatus(
                         httpStatus -> httpStatus.value() == HttpStatus.NOT_FOUND.value(),

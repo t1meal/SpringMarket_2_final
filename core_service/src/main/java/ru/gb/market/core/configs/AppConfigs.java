@@ -11,15 +11,15 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
-import ru.gb.market.core.properties.CartServiceIntegrationProperties;
+import ru.gb.market.core.properties.IntegrationProperties;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@EnableConfigurationProperties(CartServiceIntegrationProperties.class)
+@EnableConfigurationProperties(IntegrationProperties.class)
 @RequiredArgsConstructor
 public class AppConfigs {
 
-    private final CartServiceIntegrationProperties cartServiceProperties;
+    private final IntegrationProperties cartServiceProperties;
 
     @Bean
     public WebClient cartServiceWebClient (){

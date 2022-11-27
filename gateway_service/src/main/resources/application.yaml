@@ -41,6 +41,14 @@ spring:
             - StripPrefix=1
             - PrefixPath=/market-auth
             - JwtAuthFilter
+        - id: product-service
+          uri: http://localhost:9000
+          predicates:
+            - Path=/products/**
+          filters:
+            - StripPrefix=1
+            - PrefixPath=/market-products
+            - JwtAuthFilter
 
 jwt:
   secret: h4f8093h4f983yhrt9834hr0934hf0hf493g493gf438rh438th34g34g

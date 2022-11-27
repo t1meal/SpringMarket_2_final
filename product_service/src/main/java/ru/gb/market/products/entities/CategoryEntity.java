@@ -1,4 +1,4 @@
-package ru.gb.market.core.entities;
+package ru.gb.market.products.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Table(name = "categories")
 @NoArgsConstructor
-public class Category {
+public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,19 +1,17 @@
-package ru.gb.market.core.mappers;
-
+package ru.gb.market.products.mappers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.gb.market.api.dto.CategoryDto;
-import ru.gb.market.core.entities.Category;
+import ru.gb.market.products.entities.CategoryEntity;
 import java.util.stream.Collectors;
-
 
 @Component
 @RequiredArgsConstructor
 public class CategoryMapper {
     private final ProductConverter productConverter ;
 
-    public CategoryDto entityToDto (Category category){
+    public CategoryDto entityToDto (CategoryEntity category){
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(category.getId());
         categoryDto.setTitle(category.getTitle());

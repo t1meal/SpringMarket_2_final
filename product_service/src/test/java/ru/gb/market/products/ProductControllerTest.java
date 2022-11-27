@@ -1,4 +1,4 @@
-package ru.gb.market.core;
+package ru.gb.market.products;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

@@ -21,19 +21,19 @@ public class OrderService {
     private final CartServiceIntegration cartServiceIntegration;
 
     @Transactional
-    public void createOrder(String userName) {
+    public Order createOrder(String userName) {
         CartDto cartDto = cartServiceIntegration.getUserCart(userName);
 
         Order order = new Order();
         order.setUsername(userName);
         order.setTotalPrice(cartDto.getTotalPrice());
 
-        List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems());
-        List<OrderItem> itemList = cartItemDtoMapper.setOrder(items, order);
+        List<OrderItem> items = cartItemDtoMapper.mapToOrderItems(cartDto.getItems(), order);
 
-        order.setItems(itemList);
+        order.setItems(items);
         order.setUser_email("user@yandex.ru");
 
         orderRepository.save(order);
+        return order;
     }
 }

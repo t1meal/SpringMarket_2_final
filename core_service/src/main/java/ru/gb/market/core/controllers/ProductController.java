@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.core.services.ProductService;
 
+import java.util.List;
 
 
 @RestController
@@ -23,6 +24,12 @@ public class ProductController {
         return productService.findAll(pageIndex, 10);
     }
 
+    @GetMapping("/products_")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductDto> findAll() {
+        return productService.findAllProducts();
+    }
+
     @GetMapping("/products/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto findById(@PathVariable Long id) {
@@ -32,7 +39,7 @@ public class ProductController {
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveProduct(@RequestBody @Validated ProductDto productDto) {
-            productService.save(productDto);
+            productService.createNewProduct(productDto);
     }
 
     @PutMapping("/products")

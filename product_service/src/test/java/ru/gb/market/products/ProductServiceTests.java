@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ru.gb.market.api.dto.ProductDto;
-import ru.gb.market.core.entities.CategoryEntity;
-import ru.gb.market.core.repositories.ProductRepository;
-import ru.gb.market.core.services.CategoryService;
-import ru.gb.market.core.services.ProductService;
+import ru.gb.market.products.entities.CategoryEntity;
+import ru.gb.market.products.repositories.ProductRepository;
+import ru.gb.market.products.services.CategoryService;
+import ru.gb.market.products.services.ProductService;
 
 
 import java.util.Collections;

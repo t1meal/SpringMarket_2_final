@@ -3,6 +3,7 @@ package ru.gb.market.products.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.api.dto.ProductDto;
@@ -10,9 +11,7 @@ import ru.gb.market.api.exceptions.ResourceNotFoundException;
 import ru.gb.market.products.entities.ProductEntity;
 import ru.gb.market.products.mappers.ProductConverter;
 import ru.gb.market.products.repositories.ProductRepository;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import ru.gb.market.products.specifications.ProductsSpecifications;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +19,20 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
     private final ProductConverter productConverter;
+
+    public Specification<ProductEntity> createSpecByFilters(Integer minPrice, Integer maxPrice, String title) {
+        Specification<ProductEntity> spec = Specification.where(null);
+        if (minPrice != null) {
+            spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
+        }
+        if (minPrice != null) {
+            spec = spec.and(ProductsSpecifications.priceLessThanOrEqualsThan(maxPrice));
+        }
+        if (minPrice != null) {
+            spec = spec.and(ProductsSpecifications.titleLike(title));
+        }
+        return spec;
+    }
 
     public Page<ProductDto> findAll(int pageIndex, int pageSize) {
         if (pageIndex < 1) {
@@ -29,8 +42,8 @@ public class ProductService {
                 .map(productConverter::entityToDto);
     }
 
-    public List<ProductDto> findAllProducts() {
-        return productRepository.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
+    public Page<ProductEntity> findAllProductsBySpec(Specification<ProductEntity> spec, int page) {
+        return productRepository.findAll(spec, PageRequest.of(page, 5));
     }
 
     public ProductDto findProductDtoById(Long id) {
@@ -39,10 +52,10 @@ public class ProductService {
         return productConverter.entityToDto(product);
     }
 
-    public ProductEntity findProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
-    }
+//    public ProductEntity findProductById(Long id) {
+//        return productRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
+//    }
 
     public void createNewProduct(ProductDto productDto) {
         ProductEntity product = productConverter.dtoToEntity(productDto);

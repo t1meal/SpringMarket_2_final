@@ -43,17 +43,21 @@
                                        aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                                 <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
-                                        style="margin-left: 10px;" type="submit">Войти
+                                        style="margin-left: 10px;" type="submit">Sign in
                                 </button>
                             </div>
                         </form>
                     </li>
 
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
-                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Log out</button>
                     </li>
 
                     <a class="nav-link" ng-show="!isUserLoggedIn()" href="#!/registration">Registration</a>
+
+                    <li class="nav-item" ng-show="!isUserLoggedIn()" style="padding: 4px;">
+                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToAuthUnregistered()">I am not registered</button>
+                    </li>
 
                 </div>
             </div>

@@ -13,6 +13,7 @@ import ru.gb.market.products.services.CategoryService;
 import ru.gb.market.products.services.ProductService;
 
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 @SpringBootTest
@@ -37,7 +38,7 @@ public class ProductServiceTests {
                 .when(categoryService)
                 .findCategoryByTitle("Food");
 
-        ProductDto productDto = new ProductDto(null, "Апельсины", 100, "Food");
+        ProductDto productDto = new ProductDto(null, "Апельсины", BigDecimal.valueOf(100), "Food");
         productService.createNewProduct(productDto);
 
         Mockito.verify(productRepository, Mockito.times(1)).save(ArgumentMatchers.any());

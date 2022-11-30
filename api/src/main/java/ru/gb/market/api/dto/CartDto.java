@@ -1,13 +1,14 @@
 package ru.gb.market.api.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CartDto implements Serializable {
 
     private Long id;
     private List<CartItemDto> items;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public Long getId() {
         return id;
@@ -25,11 +26,11 @@ public class CartDto implements Serializable {
         this.items = items;
     }
 
-    public int getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

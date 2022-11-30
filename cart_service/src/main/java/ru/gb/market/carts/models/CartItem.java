@@ -6,6 +6,7 @@ import lombok.Setter;
 import ru.gb.market.api.dto.ProductDto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -14,9 +15,9 @@ public class CartItem implements Serializable {
 
     private Long productId;
     private String title;
-    private int price;
+    private BigDecimal price;
     private int count;
-    private int sum;
+    private BigDecimal sum;
 
     public CartItem(ProductDto product) {
         this.productId = product.getId();
@@ -28,6 +29,6 @@ public class CartItem implements Serializable {
 
     public void changeQuantity(int delta) {
         this.count += delta;
-        this.sum = this.count * this.price;
+        this.sum = price.multiply(BigDecimal.valueOf(count));
     }
 }

@@ -2,6 +2,7 @@ package ru.gb.market.carts.services;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.ProductDto;
@@ -13,9 +14,9 @@ import ru.gb.market.carts.models.Cart;
 import ru.gb.market.carts.repositories.CartRepository;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,38 @@ public class CartService {
     private final CartServiceUtils cartServiceUtils;
     private final CartConverter cartConverter;
     private final ProductServiceIntegration productServiceIntegration;
+
+    ////
+    private Map<String, Cart> carts;
+
+    @Value("${cart-service.cart-prefix}")
+    private String cartPrefix;
+    @PostConstruct
+    private void init (){
+        carts = new HashMap<>();
+    }
+
+    public Cart getMappedCurrentCart (String uuid){
+        String targetUuid = cartPrefix + uuid;
+        if(!carts.containsKey(targetUuid)){
+            carts.put(uuid, new Cart());
+        }
+        return carts.get(targetUuid);
+    }
+
+    public void add(String uuid, Long productId){
+        ProductDto product = productServiceIntegration.getProductById(productId);
+        getMappedCurrentCart(uuid).getItems().add(new CartItem(product));
+    }
+
+    public void remove (String uuid, Long productId) {
+        getMappedCurrentCart(uuid).getItems().removeIf(cartItem -> cartItem.getProductId().equals(productId));
+    }
+    public void clear (String uuid) {
+        getMappedCurrentCart(uuid).getItems().clear();
+    }
+
+    ////
 
     public void createCart(Long id) {
         Cart cart = new Cart(id);
@@ -106,14 +139,14 @@ public class CartService {
         Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
         List <CartItem> emptyList = new ArrayList<>();
         cart.setItems(emptyList);
-        cart.setTotalPrice(0);
+        cart.setTotalPrice(BigDecimal.ZERO);
         cartRepository.save(cart);
     }
 
     private void recalculate(Cart cart) {
-        int totalPrice = 0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (CartItem item : cart.getItems()) {
-            totalPrice += item.getSum();
+            totalPrice = totalPrice.add(item.getSum());
         }
         cart.setTotalPrice(totalPrice);
     }

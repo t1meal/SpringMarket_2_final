@@ -41,6 +41,7 @@ public class UserService implements UserDetailsService {
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
 //    @PreAuthorize("USER")
     public Optional<UserEntity> findByUsername(String username) {
+
         return userRepository.findByUsername(username);
     }
 

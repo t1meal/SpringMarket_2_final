@@ -11,6 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.gb.market.api.dto.ProductDto;
 
+import java.math.BigDecimal;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -43,7 +45,7 @@ public class ProductControllerTest {
 
     @Test
     public void createProductTest() throws Exception {
-        ProductDto productDto = new ProductDto(null, "leaf", 100,"Food");
+        ProductDto productDto = new ProductDto(null, "leaf", BigDecimal.valueOf(100),"Food");
         mvc
                 .perform(
                         post("/api/v1/products")

@@ -1,15 +1,16 @@
 package ru.gb.market.api.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 public class CartItemDto implements Serializable {
 
     private Long productId;
     private String title;
-    private int price;
+    private BigDecimal price;
     private int count;
-    private int sum;
+    private BigDecimal sum;
 
 
     public Long getProductId() {
@@ -24,10 +25,10 @@ public class CartItemDto implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public int getCount() {
@@ -36,14 +37,14 @@ public class CartItemDto implements Serializable {
     public void setCount(int count) {
         this.count = count;
     }
-    public int getSum() {
+    public BigDecimal getSum() {
         return sum;
     }
-    public void setSum(int sum) {
+    public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
 
-    public CartItemDto(Long productId, String title, int price, int count, int sum) {
+    public CartItemDto(Long productId, String title, BigDecimal price, int count, BigDecimal sum) {
         this.productId = productId;
         this.title = title;
         this.price = price;

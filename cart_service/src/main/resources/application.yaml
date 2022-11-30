@@ -28,4 +28,7 @@ integrations:
 jwt:
   secret: fasdfo3451kb12l3k4h12k5h2lkj5h12lk3b5l12kg61l2k451lk15l43k5h1
 
+cart-service:
+  cart-prefix: market_cart_
+
 

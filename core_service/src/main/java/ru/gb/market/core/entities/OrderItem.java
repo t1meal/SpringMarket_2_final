@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.gb.market.api.dto.ProductDto;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -32,10 +31,10 @@ public class OrderItem {
     private int count;
 
     @Column(name = "price_per_product")
-    private int pricePerProduct;
+    private BigDecimal pricePerProduct;
 
     @Column(name = "sum")
-    private int sum;
+    private BigDecimal sum;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -50,10 +49,11 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public OrderItem(String title, int count, int pricePerProduct, int sum) {
+    public OrderItem(String title, int count, BigDecimal pricePerProduct, BigDecimal sum) {
         this.title = title;
         this.count = count;
         this.pricePerProduct = pricePerProduct;
         this.sum = sum;
     }
+
 }

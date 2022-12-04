@@ -1,0 +1,24 @@
+<div>
+    <div>
+        <h2>Orders</h2>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td>OrderId</td>
+                <td>Email</td>
+                <td>TotalPrice</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in orders">
+                <td>{{order.id}}</td>
+                <td>{{order.userEmail}}</td>
+                <td>{{order.totalPrice}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

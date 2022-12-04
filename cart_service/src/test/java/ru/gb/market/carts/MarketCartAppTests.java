@@ -14,6 +14,8 @@ import ru.gb.market.carts.integrations.ProductServiceIntegration;
 import ru.gb.market.carts.integrations.UserServiceIntegration;
 import ru.gb.market.carts.services.CartService;
 
+import java.math.BigDecimal;
+
 @SpringBootTest
 class MarketCartAppTests {
 
@@ -36,8 +38,8 @@ class MarketCartAppTests {
         UserDto user = new UserDto();
         user.setId(1L);
         user.setUsername("user");
-        ProductDto product5 = new ProductDto(5L, "bread", 50, "Food");
-        ProductDto product7 = new ProductDto(7L, "bread", 50, "Food");
+        ProductDto product5 = new ProductDto(5L, "bread", BigDecimal.valueOf(50), "Food");
+        ProductDto product7 = new ProductDto(7L, "bread", BigDecimal.valueOf(50), "Food");
 
         Mockito.doReturn(product5).when(productServiceIntegration).getProductById(5L);
         Mockito.doReturn(product7).when(productServiceIntegration).getProductById(7L);

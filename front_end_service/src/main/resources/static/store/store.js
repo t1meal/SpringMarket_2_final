@@ -1,4 +1,4 @@
-angular.module('market_front').controller('storeController', function ($scope, $http, $location, $localStorage) {
+angular.module('market_front').controller('storeController', function ($scope, $http, $location, $localStorage, $rootScope) {
 
     const productsPath = 'http://localhost:5000/products/api/v1/';
     const cartPath = 'http://localhost:5000/cart/api/v1';
@@ -19,6 +19,43 @@ angular.module('market_front').controller('storeController', function ($scope, $
                 $scope.paginationArray = $scope.generatePageIndexes(1, $scope.productsPage.totalPages);
                 currentPage = pageIndex;
             });
+    }
+
+    $scope.addProductToCart = function (product) {
+        if ($rootScope.isUserLoggedIn()) {
+            $http.post(cartPath + '/cart', product)
+                .then(
+                    function successCallback() {
+                        alert('ОК');
+                    },
+                    function failCallback(response) {
+                        alert(response.data.messages);
+                    });
+        } else {
+            $scope.tempCartItem = {
+                productId:product.id,
+                title: product.title,
+                price: product.price,
+                quantity: 1,
+                sum: product.price,
+            }
+            let arr = $localStorage.guestCart.items;
+            if (arr.length > 0){
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].title === $scope.tempCartItem.title) {
+                        arr[i].quantity = arr[i].quantity + 1;
+                        arr[i].sum = arr[i].price * arr[i].quantity;
+                        $rootScope.recalculateGuestCart();
+                        // $scope.tempCartItem = null;
+                        return;
+                    }
+                }
+            }
+            $localStorage.guestCart.items.push($scope.tempCartItem);
+            $rootScope.recalculateGuestCart();
+            // $scope.tempCartItem = null;
+        }
+
     }
 
     $scope.deleteProduct = function (product) {
@@ -58,16 +95,7 @@ angular.module('market_front').controller('storeController', function ($scope, $
         $scope.loadProducts(currentPage);
     }
 
-    $scope.addProductToCart = function (p) {
-        $http.post(cartPath + '/cart', p)
-            .then(
-                function successCallback() {
-                    alert('ОК');
-                },
-                function failCallback(response) {
-                    alert(response.data.messages);
-                });
-    }
+
     // $scope.checkEmptyCart = function () {
     //     $http.get(productsPath + 'products/cart/empty')
     //

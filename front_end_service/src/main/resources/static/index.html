@@ -29,6 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup1">
                 <div class="navbar-nav">
                     <a class="nav-link" href="#!/store">Store</a>
+                    <a class="nav-link" href="#!/cart">Cart</a>
                     <a class="nav-link" ng-show="isUserLoggedIn()" href="#!/create_product">Create product</a>
 
 
@@ -49,15 +50,15 @@
                         </form>
                     </li>
 
+
+                    <a class="nav-link" ng-show="!isUserLoggedIn()" href="#!/registration">Registration</a>
+
+                    <a class="nav-link" ng-show="isUserLoggedIn()" href="#!/orders">My Orders</a>
+
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Log out</button>
                     </li>
 
-                    <a class="nav-link" ng-show="!isUserLoggedIn()" href="#!/registration">Registration</a>
-
-                    <li class="nav-item" ng-show="!isUserLoggedIn()" style="padding: 4px;">
-                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToAuthUnregistered()">I am not registered</button>
-                    </li>
 
                 </div>
             </div>
@@ -75,6 +76,7 @@
     <script src="create_product/create_product.js"></script>
     <script src="cart/cart.js"></script>
     <script src="registration/registration.js"></script>
+    <script src="orders/orders.js"></script>
 
 </div>
 </body>

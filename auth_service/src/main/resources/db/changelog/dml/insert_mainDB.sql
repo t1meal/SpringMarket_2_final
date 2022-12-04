@@ -39,13 +39,7 @@ values (1, 1),
        (4, 5),
        (4, 6);
 
---changeset t1meal: insert_unregistered_user
 
-insert into users (username, password)
-values ('unregisteredUsers', '$2a$12$pfpiJIyk43KlS9mM/1Qmeueq8N4co4HxFA3.CnhZHBvzurrAdRzlS');
-
-insert into users_roles (user_id, role_id)
-values (3, 1);
 
 
 

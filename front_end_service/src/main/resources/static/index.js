@@ -30,6 +30,10 @@
                 templateUrl: 'registration/registration.html',
                 controller: 'registrationController'
             })
+            .when('/orders', {
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
+            })
             .otherwise({
                 redirectTo: '/'
             })
@@ -45,6 +49,7 @@
 
 angular.module('market_front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:5000/auth/api/v1/';
+    const cartPath = 'http://localhost:5000/cart/api/v1/cart';
 
     $scope.tryToAuth = function () {
         $http.post(contextPath + "auth", $scope.user)
@@ -55,37 +60,33 @@ angular.module('market_front').controller('indexController', function ($rootScop
 
                         $scope.user.username = null;
                         $scope.user.password = null;
+                        $scope.sendGuestCart($localStorage.guestCart);
                     }
                 },
-                function errorCallback(response) {
+                function errorCallback() {
+                alert("Failed login attempt!")
                 }
             );
     }
-
-    $scope.tryToAuthUnregistered = function () {
-        $scope.user = {
-            username: "unregisteredUsers",
-            password: 111
-        };
-        $http.post(contextPath + "auth", $scope.user)
-            .then(function successCallback(response) {
-                    if (response.data.token) {
-                        $http.defaults.headers.common.Authorization = "Bearer " + response.data.token;
-                        $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
-
-                        $scope.user.username = null;
-                        $scope.user.password = null;
-                    }
+    $scope.sendGuestCart = function (guestCart){
+        if ($localStorage.guestCart.items.length > 0){
+            $http.post(cartPath + "/guestCart", guestCart)
+                .then(function successCallback(){
+                    alert("Success merged carts!");
+                    $localStorage.guestCart.items.length = 0;
+                    $localStorage.guestCart.totalPrice = 0;
                 },
-                function errorCallback(response) {
-                }
-            );
+                    function errorCallback(){
+                    alert("Cart merging error! ")
+                    })
+        }
     }
 
     $scope.clearUser = function () {
         delete $localStorage.webMarketUser;
         $http.defaults.headers.common.Authorization = '';
     }
+
     $scope.tryToLogout = function () {
         $scope.clearUser();
         if ($scope.user.username) {
@@ -115,6 +116,15 @@ angular.module('market_front').controller('indexController', function ($rootScop
         }
 
         $http.defaults.headers.common.Authorization = "Bearer " + $localStorage.webMarketUser.token;
+    }
+    if (!$localStorage.guestCart) {
+        let items = [];
+        let totalPrice = 0;
+        $localStorage.guestCart = {
+            id: null,
+            items,
+            totalPrice
+        }
     }
 
 });

@@ -2,12 +2,10 @@ package ru.gb.market.carts.models;
 
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
-
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -21,12 +19,12 @@ public class Cart implements Serializable {
     @Id
     private Long id;
     private List<CartItem> items;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart(Long userID) {
         this.id = userID;
         this.items = new ArrayList<>();
-        this.totalPrice = 0;
+        this.totalPrice = BigDecimal.ZERO;
     }
 
 //    public List<CartItem> getItems (){

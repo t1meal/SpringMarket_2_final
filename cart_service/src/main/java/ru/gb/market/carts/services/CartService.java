@@ -2,20 +2,22 @@ package ru.gb.market.carts.services;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import ru.gb.market.api.dto.CartDto;
+import ru.gb.market.api.dto.CartItemDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
 import ru.gb.market.carts.integrations.ProductServiceIntegration;
 import ru.gb.market.carts.mappers.CartConverter;
+import ru.gb.market.carts.mappers.CartItemConverter;
 import ru.gb.market.carts.models.CartItem;
 import ru.gb.market.carts.models.Cart;
 import ru.gb.market.carts.repositories.CartRepository;
 
+import java.math.BigDecimal;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class CartService {
     private final CartServiceUtils cartServiceUtils;
     private final CartConverter cartConverter;
     private final ProductServiceIntegration productServiceIntegration;
+    private final CartItemConverter cartItemConverter;
 
     public void createCart(Long id) {
         Cart cart = new Cart(id);
@@ -48,8 +51,8 @@ public class CartService {
 
     public void addProductToCart(String userName, ProductDto productDto) {
         Long userId = cartServiceUtils.pullUserId(userName);
-        Optional <Cart> cart = cartServiceUtils.findCartByIdUtil(userId);
-        if (cart.isEmpty()){
+        Optional<Cart> cart = cartServiceUtils.findCartByIdUtil(userId);
+        if (cart.isEmpty()) {
             createCart(userId);
         }
         Cart userCart = cartServiceUtils.findCartById(userId);
@@ -60,7 +63,7 @@ public class CartService {
     }
 
     private boolean addProductIfExist(Long productId, Cart cart) {
-        if (cart.getItems() == null){
+        if (cart.getItems() == null) {
             cart.setItems(new ArrayList<>());
             return false;
         }
@@ -104,18 +107,34 @@ public class CartService {
 
     public void clearCart(String userName) {
         Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
-        List <CartItem> emptyList = new ArrayList<>();
+        List<CartItem> emptyList = new ArrayList<>();
         cart.setItems(emptyList);
-        cart.setTotalPrice(0);
+        cart.setTotalPrice(BigDecimal.ZERO);
         cartRepository.save(cart);
     }
 
     private void recalculate(Cart cart) {
-        int totalPrice = 0;
+        BigDecimal totalPrice = BigDecimal.ZERO;
         for (CartItem item : cart.getItems()) {
-            totalPrice += item.getSum();
+            totalPrice = totalPrice.add(item.getSum());
         }
         cart.setTotalPrice(totalPrice);
     }
 
+    public void mergeCarts(String userName, CartDto guestCart) {
+        Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
+
+        for (CartItemDto guestItem: guestCart.getItems()) {
+            CartItem guestCartItem = cartItemConverter.dtoToEntity(guestItem);
+            CartItem userCartItem = cart.getItems().stream().filter(item -> item.getProductId().equals(guestCartItem.getProductId())).findFirst().orElse(null);
+            if (userCartItem != null){
+                userCartItem.setCount(userCartItem.getCount() + guestCartItem.getCount());
+                userCartItem.setSum(cartItemConverter.calculateSum(userCartItem));
+            } else {
+                cart.getItems().add(guestCartItem);
+            }
+        }
+        recalculate(cart);
+        cartRepository.save(cart);
+    }
 }

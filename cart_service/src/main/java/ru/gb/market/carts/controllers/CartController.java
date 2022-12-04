@@ -16,6 +16,12 @@ public class CartController {
 
     private final CartService cartService;
 
+    @PostMapping("/guestCart")
+    @ResponseStatus(HttpStatus.OK)
+    public void getGuestCart(@RequestHeader String userName, @RequestBody CartDto guestCart){
+        cartService.mergeCarts(userName, guestCart);
+    }
+
     @PutMapping ("/create/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void newCart (@PathVariable Long id){

@@ -47,7 +47,7 @@ public class OrderServiceTest {
         cartItemDto.setProductId(512L);
         cartItemDto.setTitle("bread");
         cartItemDto.setPrice(BigDecimal.valueOf(60));
-        cartItemDto.setCount(2);
+        cartItemDto.setQuantity(2);
         cartItemDto.setSum(BigDecimal.valueOf(120));
         cartDto.setTotalPrice(BigDecimal.valueOf(120));
         cartDto.setItems(List.of(cartItemDto));

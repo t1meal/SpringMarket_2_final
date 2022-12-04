@@ -25,14 +25,9 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
-            if (request.getHeaders().containsKey("username")){
-                return this.onError(exchange, "Invalid request!", HttpStatus.BAD_REQUEST);
-            }
-
-            if (request.getHeaders().containsKey("username")) {
-                return this.onError(exchange, "Invalid header username", HttpStatus.BAD_REQUEST);
-            }
-
+//            if (request.getHeaders().containsKey("userName")) {
+//                return this.onError(exchange, "Invalid request!", HttpStatus.BAD_REQUEST);
+//            }
             if (!isAuthMissing(request)) {
                 final String token = getAuthHeader(request);
                 if (jwtUtil.isInvalid(token)) {

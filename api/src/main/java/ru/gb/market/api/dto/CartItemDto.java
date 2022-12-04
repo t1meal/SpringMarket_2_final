@@ -9,7 +9,7 @@ public class CartItemDto implements Serializable {
     private Long productId;
     private String title;
     private BigDecimal price;
-    private int count;
+    private int quantity;
     private BigDecimal sum;
 
 
@@ -31,11 +31,11 @@ public class CartItemDto implements Serializable {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public int getCount() {
-        return count;
+    public int getQuantity() {
+        return quantity;
     }
-    public void setCount(int count) {
-        this.count = count;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     public BigDecimal getSum() {
         return sum;
@@ -44,11 +44,11 @@ public class CartItemDto implements Serializable {
         this.sum = sum;
     }
 
-    public CartItemDto(Long productId, String title, BigDecimal price, int count, BigDecimal sum) {
+    public CartItemDto(Long productId, String title, BigDecimal price, int quantity, BigDecimal sum) {
         this.productId = productId;
         this.title = title;
         this.price = price;
-        this.count = count;
+        this.quantity = quantity;
         this.sum = sum;
     }
     public CartItemDto() {

@@ -21,7 +21,7 @@ public class CartItemDtoMapper {
         List<OrderItem> orderItems = cartItems.stream()
                 .map(cartItem -> new OrderItem(
                         productServiceIntegration.getProductById(cartItem.getProductId()).getTitle(),
-                        cartItem.getCount(),
+                        cartItem.getQuantity(),
                         cartItem.getPrice(),
                         cartItem.getSum())
                 ).collect(Collectors.toList());

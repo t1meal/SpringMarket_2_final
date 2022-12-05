@@ -21,6 +21,9 @@ public class CartServiceUtils {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart for user with id " + id + " not found!"));
     }
+    public Optional<Cart> findOptionalCartById (Long id){
+        return repository.findById(id);
+    }
 
     public Optional<Cart> findCartByIdUtil(Long id) {
         return repository.findById(id);

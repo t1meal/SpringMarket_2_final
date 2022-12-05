@@ -17,6 +17,7 @@ import ru.gb.market.carts.repositories.CartRepository;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -122,19 +123,32 @@ public class CartService {
     }
 
     public void mergeCarts(String userName, CartDto guestCart) {
-        Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
-
-        for (CartItemDto guestItem: guestCart.getItems()) {
-            CartItem guestCartItem = cartItemConverter.dtoToEntity(guestItem);
-            CartItem userCartItem = cart.getItems().stream().filter(item -> item.getProductId().equals(guestCartItem.getProductId())).findFirst().orElse(null);
-            if (userCartItem != null){
-                userCartItem.setCount(userCartItem.getCount() + guestCartItem.getCount());
-                userCartItem.setSum(cartItemConverter.calculateSum(userCartItem));
-            } else {
-                cart.getItems().add(guestCartItem);
+        Long userId = cartServiceUtils.pullUserId(userName);
+        Optional<Cart> optionalCart = cartServiceUtils.findOptionalCartById(userId);
+        if (optionalCart.isEmpty()) {
+            Cart userCart = new Cart();
+            userCart.setId(userId);
+            List<CartItem> cartItemList = guestCart.getItems().stream().map(cartItemConverter::dtoToEntity).collect(Collectors.toList());
+            userCart.setItems(cartItemList);
+            recalculate(userCart);
+            cartRepository.save(userCart);
+        } else {
+            Cart cart = optionalCart.get();
+            if (cart.getItems() == null){
+                cart.setItems(new ArrayList<>());
             }
+            for (CartItemDto guestItem : guestCart.getItems()) {
+                CartItem guestCartItem = cartItemConverter.dtoToEntity(guestItem);
+                CartItem userCartItem = cart.getItems().stream().filter(item -> item.getProductId().equals(guestCartItem.getProductId())).findFirst().orElse(null);
+                if (userCartItem != null) {
+                    userCartItem.setCount(userCartItem.getCount() + guestCartItem.getCount());
+                    userCartItem.setSum(cartItemConverter.calculateSum(userCartItem));
+                } else {
+                    cart.getItems().add(guestCartItem);
+                }
+            }
+            recalculate(cart);
+            cartRepository.save(cart);
         }
-        recalculate(cart);
-        cartRepository.save(cart);
     }
 }

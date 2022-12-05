@@ -40,7 +40,7 @@ angular.module('market_front').controller('cartProductController', function ($sc
         }
     }
 
-    $scope.loadCartProducts = function () {
+    $rootScope.loadCartProducts = function () {
         if ($rootScope.isUserLoggedIn()) {
             $http.get(cartPath)
                 .then(function successCallback(response) {
@@ -129,7 +129,6 @@ angular.module('market_front').controller('cartProductController', function ($sc
                     alert(response.data.messages);
                 });
     }
-
 
     $scope.loadCartProducts();
 });

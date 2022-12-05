@@ -14,8 +14,6 @@ import ru.gb.market.core.utils.StatisticUtil;
 @RequiredArgsConstructor
 public class ServiceRuntimeAspect {
 
-
-
     @Around("execution(* ru.gb.market.core.services.*.* (..))")
     public Object timeAround(ProceedingJoinPoint joinPoint) {
 

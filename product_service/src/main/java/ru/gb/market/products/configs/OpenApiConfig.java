@@ -1,4 +1,4 @@
-package ru.gb.market.core.configs;
+package ru.gb.market.products.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -11,7 +11,7 @@ public class OpenApiConfig {
     public OpenAPI api() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("GB - Spring Market - Cервис заказов пользователей")
+                        .title("GB - Spring Market - Продуктовый сервис")
                         .version("v1")
                 );
     }

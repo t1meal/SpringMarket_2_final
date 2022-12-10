@@ -13,17 +13,12 @@ import ru.gb.market.api.exceptions.ResourceNotFoundException;
 public class GlobalExceptionHandler {
     @ExceptionHandler
     private ResponseEntity<?> catchResourceNotFoundException(ResourceNotFoundException e) {
-        return new ResponseEntity<>(new MarketError(e.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MarketError(e.getMessage(), "404"), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     private ResponseEntity<?> catchDataValidationException(DataValidationException e) {
-        return new ResponseEntity<>(new MarketError(e.getMessages()), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<?> catchUsersExceptions(UsersException e) {
-        return new ResponseEntity<>(new MarketError(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(new MarketError(e.getMessage(), "400"), HttpStatus.BAD_REQUEST);
     }
 
 }

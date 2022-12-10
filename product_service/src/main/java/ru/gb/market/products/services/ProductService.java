@@ -13,6 +13,8 @@ import ru.gb.market.products.mappers.ProductConverter;
 import ru.gb.market.products.repositories.ProductRepository;
 import ru.gb.market.products.specifications.ProductsSpecifications;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -34,28 +36,23 @@ public class ProductService {
         return spec;
     }
 
-    public Page<ProductDto> findAll(int pageIndex, int pageSize) {
+    public Page<ProductDto> findAll(Specification<ProductEntity> spec, int pageIndex, int pageSize) {
         if (pageIndex < 1) {
             pageIndex = 1;
         }
-        return productRepository.findAll(PageRequest.of(pageIndex - 1, pageSize))
+        return productRepository.findAll(spec ,PageRequest.of(pageIndex - 1, pageSize))
                 .map(productConverter::entityToDto);
     }
 
-    public Page<ProductEntity> findAllProductsBySpec(Specification<ProductEntity> spec, int page) {
-        return productRepository.findAll(spec, PageRequest.of(page, 5));
-    }
+//    public Page<ProductEntity> findAllProductsBySpec(Specification<ProductEntity> spec, int page) {
+//        return productRepository.findAll(spec, PageRequest.of(page, 5));
+//    }
 
     public ProductDto findProductDtoById(Long id) {
         ProductEntity product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
         return productConverter.entityToDto(product);
     }
-
-//    public ProductEntity findProductById(Long id) {
-//        return productRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Product id: " + id + " not found"));
-//    }
 
     public void createNewProduct(ProductDto productDto) {
         ProductEntity product = productConverter.dtoToEntity(productDto);
@@ -72,7 +69,14 @@ public class ProductService {
     }
 
     public void deleteById(Long productId) {
-        productRepository.deleteById(productId);
+        Optional <ProductEntity> deletedProduct = productRepository.findById(productId);
+        if (deletedProduct.isPresent()){
+            productRepository.deleteById(productId);
+        } else {
+            throw new ResourceNotFoundException("Product with id " + productId + " is not exist!");
+        }
+
+
     }
 
 }

@@ -75,6 +75,8 @@ angular.module('market_front').controller('indexController', function ($rootScop
                     alert("Success merged carts!");
                     $localStorage.guestCart.items.length = 0;
                     $localStorage.guestCart.totalPrice = 0;
+                    $rootScope.loadCartProducts();
+
                 },
                     function errorCallback(){
                     alert("Cart merging error! ")

@@ -31,7 +31,7 @@ public class Cart implements Serializable {
 //        return Collections.unmodifiableList(items);
 //    }
 
-    public void setNewItem (CartItem cartItem){
+    public void addNewItem(CartItem cartItem){
         List<CartItem> cartItems = new ArrayList<>(this.items);
         cartItems.add(cartItem);
         setItems(cartItems);

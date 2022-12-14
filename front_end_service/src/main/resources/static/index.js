@@ -50,6 +50,12 @@
 angular.module('market_front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:5000/auth/api/v1/';
     const cartPath = 'http://localhost:5000/cart/api/v1/cart';
+    const corePath = 'http://localhost:5000/core/api/v1';
+
+    $scope.currentUser = {
+        username: "Hi guest!",
+        info: null
+    }
 
     $scope.tryToAuth = function () {
         $http.post(contextPath + "auth", $scope.user)
@@ -58,28 +64,29 @@ angular.module('market_front').controller('indexController', function ($rootScop
                         $http.defaults.headers.common.Authorization = "Bearer " + response.data.token;
                         $localStorage.webMarketUser = {username: $scope.user.username, token: response.data.token};
 
+                        $scope.currentUser.username = "Welcome , " + $scope.user.username + "!";
                         $scope.user.username = null;
                         $scope.user.password = null;
                         $scope.sendGuestCart($localStorage.guestCart);
                     }
                 },
                 function errorCallback() {
-                alert("Failed login attempt!")
+                    alert("Failed login attempt!")
                 }
             );
     }
-    $scope.sendGuestCart = function (guestCart){
-        if ($localStorage.guestCart.items.length > 0){
+    $scope.sendGuestCart = function (guestCart) {
+        if ($localStorage.guestCart.items.length > 0) {
             $http.post(cartPath + "/guestCart", guestCart)
-                .then(function successCallback(){
-                    alert("Success merged carts!");
-                    $localStorage.guestCart.items.length = 0;
-                    $localStorage.guestCart.totalPrice = 0;
-                    $rootScope.loadCartProducts();
+                .then(function successCallback() {
+                        alert("Success merged carts!");
+                        $localStorage.guestCart.items.length = 0;
+                        $localStorage.guestCart.totalPrice = 0;
+                        $rootScope.loadCartProducts();
 
-                },
-                    function errorCallback(){
-                    alert("Cart merging error! ")
+                    },
+                    function errorCallback() {
+                        alert("Cart merging error! ")
                     })
         }
     }
@@ -97,12 +104,24 @@ angular.module('market_front').controller('indexController', function ($rootScop
         if ($scope.user.password) {
             $scope.user.password = null;
         }
+        $scope.currentUser.username = "Hi guest!";
         $location.path('/');
     }
 
     $rootScope.isUserLoggedIn = function () {
         return !!$localStorage.webMarketUser;
     }
+
+    $scope.adminPoint = function () {
+        $http.get(corePath + "/adminPoint")
+            .then(function successCallback(response) {
+                    alert(response.data.token);
+                },
+                function errorCallback() {
+                    alert("Access denied! Not enough permissions!")
+                })
+    }
+
 
     if ($localStorage.webMarketUser) {
         try {

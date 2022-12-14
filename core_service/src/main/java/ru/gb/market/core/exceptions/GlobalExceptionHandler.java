@@ -14,6 +14,10 @@ public class GlobalExceptionHandler {
     private ResponseEntity<?> catchResourceNotFoundException(ResourceNotFoundException e) {
         return new ResponseEntity<>(new MarketError(e.getMessage(), "404"), HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler
+    private ResponseEntity<?> catchResourceNotFoundException(AccessDeniedException e) {
+        return new ResponseEntity<>(new MarketError(e.getMessage(), "403"), HttpStatus.FORBIDDEN);
+    }
 
 
 

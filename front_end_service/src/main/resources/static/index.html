@@ -49,8 +49,6 @@
                             </div>
                         </form>
                     </li>
-
-
                     <a class="nav-link" ng-show="!isUserLoggedIn()" href="#!/registration">Registration</a>
 
                      <a class="nav-link" ng-show="isUserLoggedIn()" href="#!/orders">My Orders</a>
@@ -58,14 +56,24 @@
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Log out</button>
                     </li>
-
-
                 </div>
             </div>
         </div>
     </nav>
     <p></p>
 
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="text" ng-model="currentUser.username" disabled>
+                    <button class="btn btn-outline-success" type="button" ng-click="adminPoint()">Administration</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
     <ng-view></ng-view>
 

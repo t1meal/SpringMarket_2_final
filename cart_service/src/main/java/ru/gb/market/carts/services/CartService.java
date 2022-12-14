@@ -8,6 +8,7 @@ import ru.gb.market.api.dto.CartDto;
 import ru.gb.market.api.dto.CartItemDto;
 import ru.gb.market.api.dto.ProductDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
+import ru.gb.market.api.exceptions.ResourceNotMatchException;
 import ru.gb.market.carts.integrations.ProductServiceIntegration;
 import ru.gb.market.carts.mappers.CartConverter;
 import ru.gb.market.carts.mappers.CartItemConverter;
@@ -35,8 +36,8 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public CartDto getCurrentCart(String userName) {
-        Long userId = cartServiceUtils.pullUserId(userName);
+    public CartDto getCurrentCart(Long userId) {
+//        Long userId = cartServiceUtils.pullUserId(userName);
         if (cartServiceUtils.findCartByIdUtil(userId).isEmpty()) {
             createCart(userId);
         }
@@ -44,14 +45,19 @@ public class CartService {
         return cartConverter.entityToDto(cart);
     }
 
-    private void putToCart(Cart cart, ProductDto product) {
-        cart.setNewItem(new CartItem(product));
-        recalculate(cart);
-        cartRepository.save(cart);
+    private void putToCart(Cart cart, ProductDto productDto) {
+        ProductDto product = productServiceIntegration.getProductById(productDto.getId());
+        if (product.getId().equals(productDto.getId())) {
+            cart.addNewItem(new CartItem(product));
+            recalculate(cart);
+            cartRepository.save(cart);
+        } else {
+            throw new ResourceNotMatchException("Произошла ошибка сопастовления товаров! Товар в корзине c id " + productDto.getId() + " не соответсвует товару из каталога!");
+        }
     }
 
-    public void addProductToCart(String userName, ProductDto productDto) {
-        Long userId = cartServiceUtils.pullUserId(userName);
+    public void addProductToCart(Long userId, ProductDto productDto) {
+//        Long userId = cartServiceUtils.pullUserId(userName);
         Optional<Cart> cart = cartServiceUtils.findCartByIdUtil(userId);
         if (cart.isEmpty()) {
             createCart(userId);
@@ -79,8 +85,8 @@ public class CartService {
         return false;
     }
 
-    public CartDto changeQuantityOfItem(String userName, Long id, Integer marker) {
-        Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
+    public CartDto changeQuantityOfItem(Long userId, Long id, Integer marker) {
+        Cart cart = cartServiceUtils.findCartById(userId);
         CartItem item = cart.getItems().stream()
                 .filter(cartItem -> id.equals(cartItem.getProductId()))
                 .findAny()
@@ -96,8 +102,8 @@ public class CartService {
         return cartConverter.entityToDto(cart);
     }
 
-    public void deleteItem(String userName, Long productId) {
-        Long userId = cartServiceUtils.pullUserId(userName);
+    public void deleteItem(Long userId, Long productId) {
+//        Long userId = cartServiceUtils.pullUserId(userName);
         Cart cart = cartServiceUtils.findCartById(userId);
         List<CartItem> modifyList = new ArrayList<>(cart.getItems());
         modifyList.removeIf(cartItem -> cartItem.getProductId().equals(productId));
@@ -106,8 +112,8 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public void clearCart(String userName) {
-        Cart cart = cartServiceUtils.findCartById(cartServiceUtils.pullUserId(userName));
+    public void clearCart(Long userId) {
+        Cart cart = cartServiceUtils.findCartById(userId);
         List<CartItem> emptyList = new ArrayList<>();
         cart.setItems(emptyList);
         cart.setTotalPrice(BigDecimal.ZERO);
@@ -122,8 +128,8 @@ public class CartService {
         cart.setTotalPrice(totalPrice);
     }
 
-    public void mergeCarts(String userName, CartDto guestCart) {
-        Long userId = cartServiceUtils.pullUserId(userName);
+    public void mergeCarts(Long userId, CartDto guestCart) {
+//        Long userId = cartServiceUtils.pullUserId(userName);
         Optional<Cart> optionalCart = cartServiceUtils.findOptionalCartById(userId);
         if (optionalCart.isEmpty()) {
             Cart userCart = new Cart();
@@ -134,7 +140,7 @@ public class CartService {
             cartRepository.save(userCart);
         } else {
             Cart cart = optionalCart.get();
-            if (cart.getItems() == null){
+            if (cart.getItems() == null) {
                 cart.setItems(new ArrayList<>());
             }
             for (CartItemDto guestItem : guestCart.getItems()) {

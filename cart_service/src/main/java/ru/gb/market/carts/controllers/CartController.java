@@ -18,49 +18,49 @@ public class CartController {
 
     @PostMapping("/guestCart")
     @ResponseStatus(HttpStatus.OK)
-    public void getGuestCart(@RequestHeader String userName, @RequestBody CartDto guestCart){
-        cartService.mergeCarts(userName, guestCart);
+    public void getGuestCart(@RequestHeader Long userID, @RequestBody CartDto guestCart){
+        cartService.mergeCarts(userID, guestCart);
     }
 
-    @PutMapping ("/create/{id}")
+    @PutMapping ("/create/{userID}")
     @ResponseStatus(HttpStatus.OK)
-    public void newCart (@PathVariable Long id){
-        cartService.createCart(id);
+    public void newCart (@PathVariable Long userID){
+        cartService.createCart(userID);
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public CartDto getCurrentCart(@RequestHeader String userName) {
-        return cartService.getCurrentCart(userName);
+    public CartDto getCurrentCart(@RequestHeader Long userID) {
+        return cartService.getCurrentCart(userID);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProductInCart(@RequestHeader String userName, @RequestBody ProductDto productDto) {
-        cartService.addProductToCart(userName, productDto);
+    public void addProductInCart(@RequestHeader Long userID, @RequestBody ProductDto productDto) {
+        cartService.addProductToCart(userID, productDto);
     }
 
     @PutMapping("/item/inc/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CartDto incCountOfItem(@RequestHeader String userName, @PathVariable Long id) {
-        return cartService.changeQuantityOfItem(userName, id, 1);
+    public CartDto incCountOfItem(@RequestHeader Long userID, @PathVariable Long id) {
+        return cartService.changeQuantityOfItem(userID, id, 1);
     }
 
     @PutMapping("/item/dec/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CartDto decCountOfItem(@RequestHeader String userName, @PathVariable Long id) {
-        return cartService.changeQuantityOfItem(userName, id, -1);
+    public CartDto decCountOfItem(@RequestHeader Long userID, @PathVariable Long id) {
+        return cartService.changeQuantityOfItem(userID, id, -1);
     }
 
     @DeleteMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void clearCart(@RequestHeader String userName){
-        cartService.clearCart(userName);
+    public void clearCart(@RequestHeader Long userID){
+        cartService.clearCart(userID);
     }
     @DeleteMapping("/item/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteItemFromCart(@RequestHeader String userName, @PathVariable Long id) {
-        cartService.deleteItem(userName, id);
+    public void deleteItemFromCart(@RequestHeader Long userID, @PathVariable Long id) {
+        cartService.deleteItem(userID, id);
     }
 
 }

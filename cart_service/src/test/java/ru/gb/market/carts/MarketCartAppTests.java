@@ -30,7 +30,7 @@ class MarketCartAppTests {
     private UserServiceIntegration userServiceIntegration;
 
     @BeforeEach
-    public void initCart (){ cartService.clearCart("user");}
+    public void initCart (){ cartService.clearCart(1L);}
 
     @Test
 
@@ -48,11 +48,11 @@ class MarketCartAppTests {
         ProductDto firthProduct = productServiceIntegration.getProductById(5L);
         ProductDto sevenProduct = productServiceIntegration.getProductById(7L);
 
-        cartService.addProductToCart("user", firthProduct);
-        cartService.addProductToCart("user", sevenProduct);
+        cartService.addProductToCart(1L, firthProduct);
+        cartService.addProductToCart(1L, sevenProduct);
 
 
         Mockito.verify(productServiceIntegration, Mockito.times(1)).getProductById(ArgumentMatchers.eq(5L));
-        Assertions.assertEquals(3, cartService.getCurrentCart("user").getItems().size());
+        Assertions.assertEquals(3, cartService.getCurrentCart(1L).getItems().size());
     }
 }

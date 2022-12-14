@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.gb.market.api.exceptions.DataValidationException;
 import ru.gb.market.api.exceptions.MarketError;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
 
@@ -15,10 +14,11 @@ public class GlobalExceptionHandler {
     private ResponseEntity<?> catchResourceNotFoundException(ResourceNotFoundException e) {
         return new ResponseEntity<>(new MarketError(e.getMessage(), "404"), HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler
-    private ResponseEntity<?> catchDataValidationException(DataValidationException e) {
-        return new ResponseEntity<>(new MarketError(e.getMessage(), "400"), HttpStatus.BAD_REQUEST);
+    private ResponseEntity<?> catchResourceNotFoundException(AccessDeniedException e) {
+        return new ResponseEntity<>(new MarketError(e.getMessage(), "403"), HttpStatus.FORBIDDEN);
     }
+
+
 
 }

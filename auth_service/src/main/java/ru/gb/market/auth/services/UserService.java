@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gb.market.api.dto.NewUserDto;
 import ru.gb.market.api.exceptions.ResourceNotFoundException;
 import ru.gb.market.auth.configs.RoleGenerator;
-import ru.gb.market.auth.entities.PrivilegeEntity;
 import ru.gb.market.auth.entities.RoleEntity;
 import ru.gb.market.auth.entities.UserEntity;
 import ru.gb.market.auth.mappers.UserMapper;
@@ -79,16 +78,12 @@ public class UserService implements UserDetailsService {
 //        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 //    }
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<RoleEntity> roles) {
-        List<String> rolesAndPrivilegeList = new ArrayList<>();
-        List<PrivilegeEntity> privilegeList = new ArrayList<>();
-
-        for (RoleEntity item : roles) {
-            rolesAndPrivilegeList.add(item.getName());
-            privilegeList.addAll(item.getPrivileges());
+        List<String> rolesList = new ArrayList<>();
+        for (RoleEntity role : roles) {
+            rolesList.add(role.getName());
         }
-        for (PrivilegeEntity item : privilegeList) {
-            rolesAndPrivilegeList.add(item.getName());
-        }
-        return rolesAndPrivilegeList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return rolesList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
+
+
 }

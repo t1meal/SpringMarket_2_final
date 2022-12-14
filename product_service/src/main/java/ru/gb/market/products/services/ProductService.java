@@ -12,6 +12,7 @@ import ru.gb.market.products.entities.ProductEntity;
 import ru.gb.market.products.mappers.ProductConverter;
 import ru.gb.market.products.repositories.ProductRepository;
 import ru.gb.market.products.specifications.ProductsSpecifications;
+import ru.gb.market.products.validators.ProductValidator;
 
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
     private final ProductConverter productConverter;
+    private final ProductValidator productValidator;
 
     public Specification<ProductEntity> createSpecByFilters(Integer minPrice, Integer maxPrice, String title) {
         Specification<ProductEntity> spec = Specification.where(null);
@@ -55,6 +57,7 @@ public class ProductService {
     }
 
     public void createNewProduct(ProductDto productDto) {
+        productValidator.validate(productDto);
         ProductEntity product = productConverter.dtoToEntity(productDto);
         productRepository.save(product);
     }

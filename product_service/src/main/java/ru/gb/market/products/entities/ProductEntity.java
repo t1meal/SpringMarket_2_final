@@ -39,14 +39,4 @@ public class ProductEntity {
     @JoinColumn (name = "category_id")
     private CategoryEntity category;
 
-//    public ProductEntity(String title, int price) {
-//        this.title = title;
-//        this.price = price;
-//    }
-//
-//    public ProductEntity(Long id, String title, int price) {
-//        this.id = id;
-//        this.title = title;
-//        this.price = price;
-//    }
 }

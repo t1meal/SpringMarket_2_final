@@ -7,7 +7,10 @@ create table users
     id         bigserial primary key,
     username   varchar(30) not null unique,
     password   varchar(80) not null,
-    email      varchar(50) unique,
+    gender     varchar(50),
+    age        int,
+    email      varchar(50),
+    phone      varchar(50),
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );

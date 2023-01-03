@@ -2,9 +2,9 @@
 
 --changeset t1meal: insert_first_users_data
 
-insert into users (username, password, email)
-values ('user', '$2a$12$AzQ.SQRayi4zzUZD0FziheAIQqtqzIeL2GyRi6wxw59X5XB5W.0ci', 'user@gmail.com'),
-       ('admin', '$2a$12$6TnMBKtQeEuAwgV9c55PA.D80dLJtuVDSafVVCgTi7s16VgG2s4aK', 'admin@gmail.com');
+insert into users (username, password, email, gender, age)
+values ('user', '$2a$12$AzQ.SQRayi4zzUZD0FziheAIQqtqzIeL2GyRi6wxw59X5XB5W.0ci', 'user@gmail.com', 'MALE', 25),
+       ('admin', '$2a$12$6TnMBKtQeEuAwgV9c55PA.D80dLJtuVDSafVVCgTi7s16VgG2s4aK', 'admin@gmail.com', 'MALE', 45);
 
 insert into roles (name)
 values ('ROLE_USER'),

@@ -34,9 +34,6 @@ public class UserService implements UserDetailsService {
 
     private final RoleGenerator roleGenerator;
 
-    private final UserMapper userMapper;
-
-
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
 //    @PreAuthorize("USER")
     public Optional<UserEntity> findByUsername(String username) {
@@ -51,18 +48,25 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void createUser (NewUserDto user) {
+    public void createUser(NewUserDto newUserDto) {
         for (UserEntity items : userRepository.findAll()) {
-            if (items.getUsername().equals(user.getUsername())) {
-                log.error("User with name " + user.getUsername() + " is already exist!!!");
-                throw new UsernameNotFoundException("User with name " + user.getUsername() + " is already exist!!!");
+            if (items.getUsername().equals(newUserDto.getUsername())) {
+                log.error("User with name " + newUserDto.getUsername() + " is already exist!!!");
+                throw new UsernameNotFoundException("User with name " + newUserDto.getUsername() + " is already exist!!!");
             }
         }
-        UserEntity newUser = userMapper.dtoToEntity(user);
-        String encryptedPassword = passEncoder.encode(user.getPassword());
-        newUser.setPassword(encryptedPassword);
-        newUser.setRoles(roleGenerator.addOneRole("ROLE_USER"));
-        userRepository.save(newUser);
+
+        UserEntity userEntity = UserEntity.builder()
+                .username(newUserDto.getUsername())
+                .password(passEncoder.encode(newUserDto.getPassword()))
+                .gender(newUserDto.getGender())
+                .age(newUserDto.getAge())
+                .email(newUserDto.getEmail())
+                .phone(newUserDto.getPhone())
+                .build();
+
+        userEntity.setRoles(roleGenerator.addOneRole("ROLE_USER"));
+        userRepository.save(userEntity);
     }
 
     @Override

@@ -9,12 +9,32 @@
 
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="text" class="form-control" placeholder="please enter you password..." ng-model="new_user.password">
+            <input type="text" class="form-control" placeholder="please enter you password..."
+                   ng-model="new_user.password">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input type="number" class="form-control" placeholder="please enter you age..." ng-model="new_user.age">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-select" aria-label="Default select example" ng-model="new_user.gender">
+                <option value="1">MALE</option>
+                <option value="2">FEMALE</option>
+            </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="text" class="form-control" placeholder="please enter you email..." ng-model="new_user.email">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="number" class="form-control" placeholder="please enter you phone..."
+                   ng-model="new_user.phone">
         </div>
 
         <button type="submit" class="btn btn-primary">Register</button>

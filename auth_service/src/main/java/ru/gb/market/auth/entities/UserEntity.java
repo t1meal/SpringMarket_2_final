@@ -1,5 +1,6 @@
 package ru.gb.market.auth.entities;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +11,7 @@ import java.time.Instant;
 import java.util.Collection;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @Table(name = "users")
@@ -26,8 +28,17 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "age")
+    private Integer age;
+
     @Column(name = "email")
     private String email;
+
+    @Column (name = "phone")
+    private String phone;
 
     @ManyToMany
     @JoinTable(name = "users_roles",
@@ -39,6 +50,23 @@ public class UserEntity {
     public UserEntity() {
     }
 
+    public UserEntity(Long id, String username,
+                      String password, String gender,
+                      Integer age, String email,
+                      String phone, Collection<RoleEntity> roles,
+                      Instant createdAt, Instant updatedAt) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
+        this.roles = roles;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @CreationTimestamp
     @Column(name = "created_at")
     private Instant createdAt;
@@ -47,9 +75,4 @@ public class UserEntity {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-    public UserEntity(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
 }

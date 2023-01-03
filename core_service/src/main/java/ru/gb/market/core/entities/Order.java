@@ -38,7 +38,6 @@ public class Order {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
-
     @Column(name = "username")
     private String username;
 

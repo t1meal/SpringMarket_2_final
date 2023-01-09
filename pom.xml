@@ -20,6 +20,7 @@
         <relativePath/>
     </parent>
 
+
     <groupId>ru.gb.market</groupId>
     <artifactId>market</artifactId>
     <version>0.0.1-SNAPSHOT</version>

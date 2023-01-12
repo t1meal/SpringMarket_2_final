@@ -2,6 +2,7 @@ package ru.gb.market.auth.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,7 @@ import ru.gb.market.api.exceptions.ResourceNotFoundException;
 import ru.gb.market.auth.configs.RoleGenerator;
 import ru.gb.market.auth.entities.RoleEntity;
 import ru.gb.market.auth.entities.UserEntity;
-import ru.gb.market.auth.mappers.UserMapper;
+import ru.gb.market.auth.events.UserCreateEvent;
 import ru.gb.market.auth.repositories.UserRepository;
 
 
@@ -31,8 +32,9 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passEncoder;
-
     private final RoleGenerator roleGenerator;
+
+    private final ApplicationEventPublisher eventPublisher;
 
     //    @Secured({"ROLE_ADMIN", "ROLE_USER"})
 //    @PreAuthorize("USER")
@@ -67,6 +69,8 @@ public class UserService implements UserDetailsService {
 
         userEntity.setRoles(roleGenerator.addOneRole("ROLE_USER"));
         userRepository.save(userEntity);
+
+        eventPublisher.publishEvent(new UserCreateEvent(this, userEntity.getId(), userEntity.getUsername()));
     }
 
     @Override
